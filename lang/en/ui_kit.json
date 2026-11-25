@@ -588,6 +588,18 @@
             },
             "events": {}
         },
+        "UiTimelineBar": {
+            "purpose": "A day on one line: the stretches of a state along a bar, each in its tone with a tooltip.",
+            "when": "When a person or a thing was in which state over a span (an agent's day: offline, talking, on a break). How much of each is a UiBarChart or a table; the bar shows when.",
+            "props": {
+                "segments": "The stretches: `start` and `end` in the units of `span`, the tone of the fill and the words of the tooltip and of the list assistive tech reads.",
+                "span": "The length of the bar in the same units (86400 seconds of a day); what no stretch covers stays empty.",
+                "ticks": "Marks under the bar, `at` in the units of `span` (the hours).",
+                "label": "What the bar shows: it names the bar for assistive tech."
+            },
+            "slots": {},
+            "events": {}
+        },
         "UiPlaceInput": {
             "purpose": "An address search with Google Places suggestions that fills street, city, state and zip.",
             "when": "An address in a form: the person types, picks a suggestion and the form fields fill in, still theirs to correct. Without a Maps key it is a plain text box and the fields are typed by hand.",
@@ -1581,6 +1593,11 @@
         "chart_overdue": "Overdue",
         "chart_overdue_urgent": "Overdue, urgent",
         "chart_empty": "No tasks in this period.",
+        "timeline_label": "Jane Doe's day",
+        "timeline_offline": "Offline",
+        "timeline_talking": "On a call",
+        "timeline_available": "Available",
+        "timeline_break": "Break",
         "code_payload": "Payload",
         "code_note": "Build note",
         "code_text": "The build passed the unit stage, then timed out while uploading the artifacts. A retry at 14:05 failed the same way; a run on another worker is due.",

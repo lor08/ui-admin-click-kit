@@ -6,6 +6,7 @@ import UiAuthFrameDemo from './demos/UiAuthFrameDemo.vue';
 import UiAvatarDemo from './demos/UiAvatarDemo.vue';
 import UiBadgeDemo from './demos/UiBadgeDemo.vue';
 import UiBarChartDemo from './demos/UiBarChartDemo.vue';
+import UiTimelineBarDemo from './demos/UiTimelineBarDemo.vue';
 import UiBreadcrumbsDemo from './demos/UiBreadcrumbsDemo.vue';
 import UiButtonDemo from './demos/UiButtonDemo.vue';
 import UiCardDemo from './demos/UiCardDemo.vue';
@@ -101,6 +102,7 @@ export const demos: Record<string, Component> = {
     UiAvatar: UiAvatarDemo,
     UiStatCard: UiStatCardDemo,
     UiBarChart: UiBarChartDemo,
+    UiTimelineBar: UiTimelineBarDemo,
     UiMap: UiMapDemo,
     UiStreetView: UiStreetViewDemo,
     UiPlaceInput: UiPlaceInputDemo,

@@ -492,6 +492,24 @@ export const manifest: KitEntry[] = [
 />`,
     },
     {
+        name: 'UiTimelineBar',
+        group: 'data',
+        props: [
+            { name: 'segments', type: "{ key: string; start: number; end: number; tone: 'neutral' | 'brand' | 'success' | 'warning' | 'danger' | 'info'; label: string }[]" },
+            { name: 'span', type: 'number' },
+            { name: 'ticks', type: '{ at: number; label: string }[]', default: '[]' },
+            { name: 'label', type: 'string', default: 'undefined' },
+        ],
+        slots: [],
+        events: [],
+        snippet: `<UiTimelineBar
+    :label="t('reports.timeline.of', { name: agent.name })"
+    :span="86400"
+    :segments="agent.segments"
+    :ticks="[{ at: 0, label: '00:00' }, { at: 43200, label: '12:00' }, { at: 86400, label: '24:00' }]"
+/>`,
+    },
+    {
         name: 'UiStreetView',
         group: 'data',
         props: [

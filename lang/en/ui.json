@@ -74,6 +74,9 @@
         "category": "Item",
         "total": "Total"
     },
+    "timeline": {
+        "label": "Timeline"
+    },
     "code": {
         "label": "Data"
     },

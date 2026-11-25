@@ -93,6 +93,7 @@ export { default as UiTable } from './UiTable.vue';
 export { default as UiTabs } from './UiTabs.vue';
 export { default as UiText } from './UiText.vue';
 export { default as UiTextarea } from './UiTextarea.vue';
+export { default as UiTimelineBar } from './UiTimelineBar.vue';
 export { default as UiToaster } from './UiToaster.vue';
 export { default as UiTooltip } from './UiTooltip.vue';
 export type { UiBreadcrumb } from './UiBreadcrumbs.vue';
