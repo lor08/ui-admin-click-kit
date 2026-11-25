@@ -1,0 +1,1310 @@
+{
+    "permission_names": {
+        "view": "Open the UI kit section"
+    },
+    "title": "UI kit",
+    "lead": "Every component a screen of the admin is built from, live, with the snippet to copy. Take a component from here; if none fits, add one to the kit, not styles to the page.",
+    "nav": "Groups of the kit",
+    "example": {
+        "live": "Live",
+        "snippet": "Usage",
+        "copy": "Copy",
+        "copied": "Snippet copied.",
+        "copy_failed": "Could not copy; select the snippet by hand.",
+        "api": "Props, slots and events",
+        "props": "Props",
+        "slots": "Slots",
+        "events": "Events",
+        "name": "Name",
+        "type": "Type",
+        "default": "Default",
+        "required": "required",
+        "description": "What it does",
+        "part_of": "Used inside :parent",
+        "none": "none"
+    },
+    "groups": {
+        "general": {
+            "title": "General elements",
+            "lead": "The controls of a form. A control with a `label` is the whole field; a bare control sits in a UiFormField of the page or in a toolbar and takes its ids from there."
+        },
+        "buttons": {
+            "title": "Buttons",
+            "lead": "One primary action per screen, secondary ones beside it, danger for what cannot be undone. A button that navigates is a UiButton with `href`."
+        },
+        "data": {
+            "title": "Data",
+            "lead": "Lists and figures: the table of a screen, the search and the filters over it, the badge of a state, the number in a card or a chip."
+        },
+        "feedback": {
+            "title": "Feedback",
+            "lead": "What the app tells the reader: a message that stays, a notice that passes, a dialog that asks, a placeholder while loading, an empty list."
+        },
+        "navigation": {
+            "title": "Navigation",
+            "lead": "Moving around a screen: tabs over one record, a menu of actions, pages of a list, the title and the crumbs at the top."
+        },
+        "layout": {
+            "title": "Layout",
+            "lead": "The surfaces and lines a page is laid out with, and the tokens behind every color and radius of the kit."
+        }
+    },
+    "tokens": {
+        "title": "Tokens",
+        "lead": "The names in the kit's theme.css. A component uses them through Tailwind classes (bg-brand-600, text-ink-muted, rounded-card); no hex code anywhere else.",
+        "colors": "Colors",
+        "radii": "Radii",
+        "type": "Type scale"
+    },
+    "composition": {
+        "title": "A list screen",
+        "lead": "How the pieces compose: header, filters, a card with the table and the pages under it. Copy this structure for a new list screen."
+    },
+    "components": {
+        "UiInput": {
+            "purpose": "A single-line text control: text, email, phone, number, date, search.",
+            "when": "Any one-line value the user types. Give it a `label` and it is the whole field with hint and error; leave the label off inside a UiFormField or a toolbar.",
+            "props": {
+                "modelValue": "The value; bind with v-model.",
+                "label": "The caption above the control. Given, the control wraps itself in a UiFormField.",
+                "hint": "A line under the control that explains it; hidden while there is an error.",
+                "error": "The validation message; marks the control invalid and describes it for assistive tech.",
+                "id": "The id of the control, for tests and autofill; generated when absent.",
+                "required": "Adds the asterisk to the label and `required` to the control.",
+                "optional": "Writes \"(optional)\" after the label.",
+                "disabled": "Greyed out, not editable, not sent.",
+                "type": "The HTML input type.",
+                "size": "Height and text size; `md` is the default of every form.",
+                "placeholder": "Grey text in the empty control; not a replacement for the label.",
+                "autocomplete": "The autocomplete hint of the browser (email, tel, one-time-code).",
+                "name": "The form field name, for a plain HTML submit.",
+                "readonly": "Shown, selectable, not editable.",
+                "autofocus": "Takes the focus when the page or dialog opens.",
+                "invalid": "Marks the control invalid without a message, when the message is shown elsewhere.",
+                "inputmode": "The keyboard a phone shows.",
+                "min_max_step_maxlength": "Passed to the control as they are."
+            },
+            "slots": {
+                "leading": "An icon on the left, inside the control.",
+                "trailing": "An icon on the right, inside the control."
+            },
+            "events": {
+                "update_modelValue": "On every keystroke, with the new value.",
+                "blur": "When the control loses focus.",
+                "keydown": "Every key, for Enter and Escape handling in the page."
+            }
+        },
+        "UiPasswordInput": {
+            "purpose": "A password control with the eye that reveals it and, on request, a judgement of its strength.",
+            "when": "Every password field: sign-in, the profile, the link that sets a password. Turn `strength` on where a new password is typed; the only rule the application enforces is `minLength`, the other checks only add to the word.",
+            "props": {
+                "modelValue": "The password; bind with v-model.",
+                "label": "The caption; with it the control is the whole field.",
+                "hint": "A line under the control.",
+                "error": "The validation message; wins over the hint.",
+                "id": "The id of the control; generated when absent.",
+                "name": "The name of the control in a plain form.",
+                "size": "Height of the control.",
+                "autocomplete": "What the browser may fill in: the current password or a new one.",
+                "placeholder": "Grey text while empty.",
+                "required": "Marks the label and the control.",
+                "optional": "Says \"optional\" beside the label.",
+                "disabled": "Greyed out.",
+                "autofocus": "Focused when the page opens.",
+                "strength": "Shows the bar, the word and the checks once something is typed.",
+                "minLength": "The shortest password the application accepts; the first check."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "On every keystroke.",
+                "blur": "When the control loses focus."
+            }
+        },
+        "UiCopyField": {
+            "purpose": "A value to hand over, not to edit, with the button that copies it.",
+            "when": "A link the office sends by hand, a key, an id someone will paste elsewhere. The field is read only and selects itself on focus; where the browser refuses the clipboard the value is selected for a manual copy.",
+            "props": {
+                "value": "The text to copy.",
+                "label": "The caption of the field.",
+                "id": "The id of the control.",
+                "copyLabel": "The word on the button; \"Copy\" by default."
+            },
+            "slots": {},
+            "events": {
+                "copied": "After the value reached the clipboard."
+            }
+        },
+        "UiTextarea": {
+            "purpose": "A multi-line text control.",
+            "when": "Notes, comments, addresses of more than one line. Same field behaviour as UiInput.",
+            "props": {
+                "modelValue": "The value; bind with v-model.",
+                "label": "The caption above the control; given, the control is the whole field.",
+                "hint": "A line under the control; hidden while there is an error.",
+                "error": "The validation message.",
+                "id": "The id of the control; generated when absent.",
+                "required": "Asterisk and `required`.",
+                "optional": "\"(optional)\" after the label.",
+                "disabled": "Greyed out, not editable.",
+                "rows": "Visible lines before it scrolls.",
+                "placeholder": "Grey text in the empty control.",
+                "readonly": "Shown, not editable.",
+                "maxlength": "The most characters the browser lets in."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "On every keystroke, with the new value."
+            }
+        },
+        "UiFileInput": {
+            "purpose": "A control that picks one file from the device.",
+            "when": "An upload in a form: a table to import, a document. The file goes up with the form; the server checks its type and size.",
+            "props": {
+                "modelValue": "The picked file, or null; bind with v-model.",
+                "accept": "The types the picker offers, as the `accept` attribute (`.xlsx,.csv`).",
+                "label": "The caption above the control; given, the control is the whole field.",
+                "hint": "A line under the control; hidden while there is an error.",
+                "error": "The validation message.",
+                "id": "The id of the control; generated when absent.",
+                "required": "Asterisk and `required`.",
+                "optional": "\"(optional)\" after the label.",
+                "disabled": "Greyed out, not pickable."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "When a file is picked, or the pick is cleared (null)."
+            }
+        },
+        "UiSelect": {
+            "purpose": "A native select over a fixed, short list of options.",
+            "when": "One choice out of a known list (status, team, plan). Up to a few dozen options; a search over many records is a UiSearchInput with its own results.",
+            "props": {
+                "modelValue": "The value of the chosen option; bind with v-model. An empty string is the placeholder.",
+                "options": "The options in order; `disabled` greys one out.",
+                "label": "The caption above the control; given, the control is the whole field.",
+                "hint": "A line under the control; hidden while there is an error.",
+                "error": "The validation message.",
+                "id": "The id of the control; generated when absent.",
+                "required": "Asterisk and `required`.",
+                "optional": "\"(optional)\" after the label.",
+                "disabled": "Greyed out.",
+                "placeholder": "The first, empty option (\"any\", \"no team\"); omit when every value is a real option.",
+                "size": "Height and text size.",
+                "invalid": "Invalid without a message."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "When another option is chosen."
+            }
+        },
+        "UiMultiSelect": {
+            "purpose": "Several choices out of a list, in a dropdown with a checkbox per option.",
+            "when": "A filter that takes any number of values (owners, tags, teams): it holds its place in a UiFilterBar like a UiSelect. A handful of flags saved with a form is a UiCheckboxGroup.",
+            "props": {
+                "modelValue": "The picked values, in the order of the options.",
+                "options": "The choices, the same shape as UiSelect.",
+                "label": "The caption; with it the control is the whole field.",
+                "hint": "A line under the control.",
+                "error": "The validation message; wins over the hint.",
+                "id": "The id of the trigger, when a test refers to it; generated otherwise.",
+                "placeholder": "What the trigger says while nothing is picked (\"All lines\"); \"Any\" otherwise.",
+                "searchable": "A filter box on top of the list, for a long one.",
+                "disabled": "Not openable."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "The new list of values, also after Clear."
+            }
+        },
+        "UiChipGroup": {
+            "purpose": "One choice out of a row of chips that all show at once.",
+            "when": "A pick that the reader makes by eye from a dozen or two short names, as the request guide picks a type, a problem and a brand. Picking the chosen chip again clears it. A few options with descriptions are a UiRadioGroup; a long list is a UiSelect.",
+            "props": {
+                "modelValue": "The value of the chosen chip, or null; bind with v-model.",
+                "options": "The chips; `disabled` greys one out (a problem that does not fit the type).",
+                "label": "The legend of the row.",
+                "hint": "A line under the row.",
+                "error": "One message for the whole row; wins over the hint.",
+                "mandatory": "The choice cannot be cleared by picking the chosen chip again.",
+                "disabled": "The whole row greyed out."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "When another chip is chosen, or null when the chosen one is picked again."
+            }
+        },
+        "UiCheckbox": {
+            "purpose": "One yes/no choice with its own label.",
+            "when": "A flag that is saved with the form (primary contact, accept the terms). For a setting that applies at once use UiSwitch.",
+            "props": {
+                "modelValue": "Checked or not; bind with v-model.",
+                "label": "The text beside the box; clicking it toggles.",
+                "description": "A smaller line under the label.",
+                "error": "The validation message under the box.",
+                "id": "The id of the box; generated when absent.",
+                "disabled": "Greyed out.",
+                "indeterminate": "Some, not all, of what the box stands for is checked (the box of a group).",
+                "mono": "The label in monospace, for a name from the code."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "When toggled."
+            }
+        },
+        "UiCheckboxGroup": {
+            "purpose": "Several yes/no choices under one caption, saved as the list of picked values.",
+            "when": "The roles of a user, the permissions of a role, the days of a schedule: a set of flags that is one field of the form, with one error.",
+            "props": {
+                "modelValue": "The picked values, in the order of the options; bind with v-model.",
+                "options": "The choices: value, label, an optional description and disabled.",
+                "label": "The caption of the whole group.",
+                "hint": "A line under the group.",
+                "error": "The validation message of the group.",
+                "columns": "How many columns the boxes take on a wide screen.",
+                "disabled": "Every box greyed out."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "When a box is toggled, with the whole list."
+            }
+        },
+        "UiSwitch": {
+            "purpose": "An on/off setting.",
+            "when": "A setting that takes effect the moment it is flipped (auto-renewal, notifications). Where a Save button follows, use UiCheckbox.",
+            "props": {
+                "modelValue": "On or off; bind with v-model.",
+                "label": "The text beside the switch; clicking it toggles.",
+                "description": "A smaller line under the label.",
+                "id": "The id of the switch; generated when absent.",
+                "disabled": "Greyed out, does not toggle."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "When flipped."
+            }
+        },
+        "UiRadioGroup": {
+            "purpose": "One choice out of a few that all fit on screen.",
+            "when": "Two to five options the reader should see at once (how to send: email, SMS, by hand). A longer list is a UiSelect.",
+            "props": {
+                "modelValue": "The value of the chosen option; bind with v-model.",
+                "options": "The options; `description` adds a line under one, `disabled` greys one out, `depth` indents one a level of a tree and `group` makes it a bold heading without a radio.",
+                "label": "The legend of the group.",
+                "name": "The shared name of the radios; generated when absent.",
+                "error": "One message for the whole group.",
+                "inline": "Options in a row instead of a column.",
+                "disabled": "The whole group greyed out."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "When another option is chosen."
+            }
+        },
+        "UiFormField": {
+            "purpose": "Label, help text and error around a control, with the ids wired.",
+            "when": "A field with more than one control (street and city), a custom control, or a bare UiInput the page wants its own layout for. A control given a `label` makes one of these by itself.",
+            "props": {
+                "label": "The caption above the control.",
+                "hint": "A line under the control; hidden while there is an error.",
+                "error": "The validation message; the control inside is marked invalid.",
+                "id": "The id the label points at; generated when absent.",
+                "required": "Asterisk on the label.",
+                "optional": "\"(optional)\" after the label."
+            },
+            "slots": {
+                "default": "The control(s). The slot props carry `id`, `describedBy` and `invalid` for a custom control; a kit control reads them by itself."
+            },
+            "events": {}
+        },
+        "UiLabel": {
+            "purpose": "The caption of a control.",
+            "when": "Only when building a custom field by hand; UiFormField and the controls render it for you.",
+            "props": {
+                "for": "The id of the control it names.",
+                "required": "Adds the asterisk and a hidden \"(required)\".",
+                "optional": "Writes \"(optional)\" after the text."
+            },
+            "slots": {
+                "default": "The caption."
+            },
+            "events": {}
+        },
+        "UiHelpText": {
+            "purpose": "A line under a control that explains it.",
+            "when": "Only when building a custom field by hand; otherwise the `hint` prop.",
+            "props": {
+                "id": "The id a control points at with aria-describedby."
+            },
+            "slots": {
+                "default": "The text."
+            },
+            "events": {}
+        },
+        "UiFieldError": {
+            "purpose": "The validation message of one control.",
+            "when": "Only when building a custom field by hand; otherwise the `error` prop. Renders nothing without a message.",
+            "props": {
+                "id": "The id a control points at with aria-describedby.",
+                "message": "The message; null renders nothing."
+            },
+            "slots": {},
+            "events": {}
+        },
+        "UiForm": {
+            "purpose": "A form that stops the browser submit, disables its actions while the request runs and shows an error that belongs to no field.",
+            "when": "Every form of a screen that the app posts.",
+            "props": {
+                "processing": "The request is running: the actions are disabled.",
+                "error": "A message about the whole form (a business refusal), shown above the fields."
+            },
+            "slots": {
+                "default": "The fields.",
+                "actions": "The buttons; a submit button here triggers `submit`."
+            },
+            "events": {
+                "submit": "When the form is submitted; the page posts."
+            }
+        },
+        "UiButton": {
+            "purpose": "An action, or a link that looks like one.",
+            "when": "Every clickable action with a word on it. `primary` once per screen, `secondary` beside it, `danger` for what cannot be undone, `ghost` and `link` for quiet actions in a row of text.",
+            "props": {
+                "variant": "The weight of the action.",
+                "size": "Height and text size; `sm` inside tables and cards.",
+                "href": "Renders the app's link instead of a button.",
+                "download": "With href: a file to save; a plain link the browser downloads, outside the app's router.",
+                "newTab": "With href: the page opens in a new tab, a plain link outside the app's router; for a record the reader works on beside the list.",
+                "type": "`submit` inside a UiForm.",
+                "block": "Full width of the container.",
+                "disabled": "Not clickable, greyed out.",
+                "loading": "The request is running: disabled, with a spinner in place of the icon.",
+                "wrap": "The words break into lines and start at the left, for a link that is a whole sentence; by default a button keeps to one line."
+            },
+            "slots": {
+                "default": "The word on the button.",
+                "icon": "An icon before the word.",
+                "trailing": "An icon after the word (a chevron for a menu)."
+            },
+            "events": {}
+        },
+        "UiIconButton": {
+            "purpose": "A square button with one icon and a label for assistive tech.",
+            "when": "Row actions in a table, closing a dialog, toggles in a header. The `label` is what a screen reader says and the tooltip shows; never leave it generic.",
+            "props": {
+                "label": "What the button does, in words.",
+                "variant": "The weight of the action.",
+                "size": "`sm` inside tables and dialog headers.",
+                "href": "Renders the app's link instead of a button.",
+                "type": "`submit` inside a form.",
+                "disabled": "Not clickable.",
+                "pressed": "Marks a toggle on or off (aria-pressed)."
+            },
+            "slots": {
+                "default": "The icon."
+            },
+            "events": {}
+        },
+        "UiTable": {
+            "purpose": "The list of a screen: columns, rows, a slot per cell, sorting, an empty state, a loading state.",
+            "when": "Any list of records. With `sort` bound the parent orders the rows (the server, usually); without it the table orders what it was given.",
+            "props": {
+                "columns": "The columns in order; `sortable` adds the sort button, `align` the text alignment, `class` extra classes on the cells, `pinEnd` pins a narrow column of row actions to the right edge while a wide table scrolls, `hideLabel` keeps the header for screen readers only.",
+                "rows": "The rows, one object each.",
+                "rowKey": "The field that identifies a row.",
+                "empty": "The words when there are no rows; the kit default otherwise.",
+                "sort": "The current order; bind with v-model:sort when the parent orders.",
+                "loading": "Skeleton rows instead of the data.",
+                "dense": "Tighter rows for long lists.",
+                "clickable": "Rows react to hover, click and Enter; the parent gets `row-click`.",
+                "flush": "No border of its own, inside a UiCard with padding=\"none\".",
+                "mutedRow": "A function of the row: true draws it dimmed (blocked, archived).",
+                "rowTone": "A function of the row: a tone tints it (a running job green, a failed one red, a late one yellow), null leaves it plain. Write the state in a cell too: the tint is never the only sign. A muted row keeps the tint and dims its text.",
+                "pulseRow": "A function of the row: true makes it blink red, to flag a record that waits for someone and nobody has taken. For what waits for someone now, never for a plain state; with reduced motion it stays tinted. Write the state in a cell too.",
+                "stickyFirst": "The first column stays in place while a wide table scrolls sideways, so every row keeps its name: a dashboard of days with the metric on the left. Meant for tables without row tints, as the pinned cell has the plain background."
+            },
+            "slots": {
+                "cell_key": "The cell of column `key`, with `row`.",
+                "header_key": "The header of column `key`, with `column`.",
+                "empty": "The empty state, in place of the `empty` words (a UiEmptyState, say).",
+                "footer": "A row under the table, for a UiPagination."
+            },
+            "events": {
+                "update_sort": "The order the reader asked for, when `sort` is bound.",
+                "row_click": "The row clicked or entered, when `clickable`."
+            }
+        },
+        "UiSearchInput": {
+            "purpose": "A search box that searches once typing pauses.",
+            "when": "The free-text search over a list or a lookup of records. The value is bound at once; `search` fires after the pause or on Enter.",
+            "props": {
+                "modelValue": "The text; bind with v-model.",
+                "placeholder": "What to type; the kit says \"Search\" otherwise.",
+                "label": "The name of the box for assistive tech; the placeholder otherwise.",
+                "size": "Height and text size.",
+                "loading": "A spinner in place of the clear button.",
+                "debounce": "Milliseconds of silence before `search`; 0 fires on every keystroke.",
+                "autofocus": "Takes the focus when the page opens.",
+                "id": "The id of the control."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "On every keystroke.",
+                "search": "The trimmed text, once typing pauses or on Enter.",
+                "clear": "When the cross or Escape clears the box."
+            }
+        },
+        "UiCombobox": {
+            "purpose": "A search box with a list of options under it to pick from with the pointer or the keyboard.",
+            "when": "A lookup of records while typing that ends in picking one (a person by name, phone or email), with rows of its own such as \"Create\". The free-text search over a list on screen is a UiSearchInput.",
+            "props": {
+                "modelValue": "The text; bind with v-model.",
+                "options": "The options in order; `key` names each, `heading` draws a caption above one to start a group.",
+                "label": "The name of the box and of the list for assistive tech.",
+                "placeholder": "What to type.",
+                "loading": "A spinner in place of the clear button.",
+                "debounce": "Milliseconds of silence before `search`.",
+                "message": "A line above the options: the text is too short, nothing was found.",
+                "id": "The id of the control.",
+                "prefer": "Which option Enter takes when the options change: the first that passes, else the first. Enter waits while `loading`."
+            },
+            "slots": {
+                "option": "One option, given `option` and whether it is `active`."
+            },
+            "events": {
+                "update_modelValue": "On every keystroke.",
+                "search": "Once typing pauses, with the trimmed text.",
+                "select": "When an option is picked by click or Enter."
+            }
+        },
+        "UiFilterBar": {
+            "purpose": "The row of filters over a list with the Show and Reset buttons.",
+            "when": "A list with two or more filters. The controls go in the slot; the page handles `apply` and `reset`.",
+            "props": {
+                "columns": "How many controls fit in a row on a wide screen.",
+                "processing": "The request is running: the buttons wait.",
+                "resettable": "Shows the Reset button.",
+                "applyLabel": "The word on the submit button; \"Show\" otherwise.",
+                "resetLabel": "The word on the reset button; \"Reset\" otherwise."
+            },
+            "slots": {
+                "default": "The filter controls.",
+                "actions": "More buttons beside Show and Reset."
+            },
+            "events": {
+                "apply": "On submit: the page reloads the list with the filter.",
+                "reset": "On Reset: the page clears the filter."
+            }
+        },
+        "UiBadge": {
+            "purpose": "A short status word in a tone.",
+            "when": "The state of a record in a list or a card (active, failed, draft). `dot` draws the state as a point before the word.",
+            "props": {
+                "tone": "Good, bad or neutral.",
+                "size": "`sm` inside dense tables.",
+                "dot": "A colored point before the word.",
+                "outline": "A border instead of a tinted background."
+            },
+            "slots": {
+                "default": "The word."
+            },
+            "events": {}
+        },
+        "UiDescriptionList": {
+            "purpose": "A caption and a value per line: the \"Information\" block of a card.",
+            "when": "The card of one record (a user, a project, a role). A value that is not plain text (a badge, a list, a link) goes in the slot of its key.",
+            "props": {
+                "items": "The lines: key, label and a plain value; leave the value out when a slot draws it.",
+                "placeholder": "What an empty value prints.",
+                "dense": "Tighter lines."
+            },
+            "slots": {
+                "value_key": "The value of one line, by its key (`value-email`), with the item as a slot prop."
+            },
+            "events": {}
+        },
+        "UiText": {
+            "purpose": "A run of secondary text: a note, the placeholder of an empty value, a name from the code.",
+            "when": "Wherever a page would otherwise colour a span itself: \"no roles\" in a cell, \"never\" for a date, a permission name in monospace, a line of explanation that belongs to no control (that one is UiHelpText).",
+            "props": {
+                "tone": "`muted` for secondary words, `subtle` for a placeholder, `default` for body text in a mono or small run.",
+                "size": "Small or extra small.",
+                "mono": "Monospace, for a name from the code.",
+                "block": "A paragraph of its own instead of an inline run.",
+                "lines": "Keeps the line breaks of the text, as notes or a message are typed."
+            },
+            "slots": {
+                "default": "The text."
+            },
+            "events": {}
+        },
+        "UiAvatar": {
+            "purpose": "The initials of a person in a circle, or their picture.",
+            "when": "A person in a header, a menu or a list.",
+            "props": {
+                "name": "The full name; the initials come from the first and last word.",
+                "src": "A picture instead of the initials.",
+                "size": "Diameter."
+            },
+            "slots": {},
+            "events": {}
+        },
+        "UiStatCard": {
+            "purpose": "One figure with its name: a card on a dashboard, or a chip in the header.",
+            "when": "A count or a sum the reader watches (tasks today, active members). With `href` it opens the list behind the figure; `compact` makes the chip of the header.",
+            "props": {
+                "label": "The name of the figure.",
+                "value": "The figure; null draws a dash.",
+                "hint": "A line under the figure (the card) or the tooltip (the chip).",
+                "tone": "Whether the figure wants attention.",
+                "href": "Opens the list behind the figure.",
+                "loading": "A skeleton in place of the figure.",
+                "compact": "The chip form for the header row.",
+                "labelFrom": "Compact only: the width from which the label is written out; below it the icon and the number stand alone."
+            },
+            "slots": {
+                "icon": "An icon before the label (the chip) or in the corner (the card)."
+            },
+            "events": {}
+        },
+        "UiBarChart": {
+            "purpose": "Stacked bars: a column per day of a month, or a line per item with its total on the right.",
+            "when": "How a count splits over days or over groups (tasks done and overdue by day, tasks by team). A single figure is a UiStatCard; exact numbers to compare row by row are a UiTable.",
+            "props": {
+                "series": "The stacked parts of every bar, bottom (or left) first: a key into `values`, the word of the legend and the tone of the fill.",
+                "rows": "The bars in order: `label` under the column or left of the line, `values` per series key, `hint` the longer name the tooltip shows (the full date).",
+                "orientation": "`vertical` draws columns with a scale on the left and thins the labels when they crowd; `horizontal` draws lines with the total on the right.",
+                "label": "What the chart shows: it names the chart for assistive tech and captions the table of numbers it carries.",
+                "empty": "The words when there are no rows or every value is zero; the kit default otherwise."
+            },
+            "slots": {
+                "total": "Horizontal only: the number at the end of a line, with `row` and `total` (a duration instead of a count, say)."
+            },
+            "events": {}
+        },
+        "UiPlaceInput": {
+            "purpose": "An address search with Google Places suggestions that fills street, city, state and zip.",
+            "when": "An address in a form: the person types, picks a suggestion and the form fields fill in, still theirs to correct. Without a Maps key it is a plain text box and the fields are typed by hand.",
+            "props": {
+                "modelValue": "The text in the box.",
+                "label": "The caption of the field.",
+                "hint": "The line under the field.",
+                "error": "The validation message.",
+                "id": "The id of the control.",
+                "placeholder": "The text shown while the box is empty.",
+                "country": "The ISO code of the country suggestions come from; the US by default."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "Every change of the text.",
+                "place": "A suggestion was picked: `{ line1, city, state, zip }`."
+            }
+        },
+        "UiRichTextEditor": {
+            "purpose": "Rich text with bold, italic, underline and two colours, as HTML.",
+            "when": "A message whose look matters to the reader, as a note shown to the team on a record. The server cleans the HTML; the editor only offers the marks it keeps.",
+            "props": {
+                "modelValue": "The HTML.",
+                "label": "The caption of the field.",
+                "hint": "The line under the field.",
+                "error": "The validation message.",
+                "id": "The id of the editable area.",
+                "placeholder": "The text shown while the area is empty.",
+                "labels": "The words of the toolbar buttons."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "Every change of the text or its marks."
+            }
+        },
+        "UiRichText": {
+            "purpose": "Text with marks that the server has cleaned, shown as it was written.",
+            "when": "Showing a rich text saved by UiRichTextEditor, such as a note for the team. Never HTML that did not pass the server.",
+            "props": {
+                "html": "The cleaned HTML.",
+                "empty": "The words when there is nothing to show."
+            },
+            "slots": {},
+            "events": {}
+        },
+        "UiStreetView": {
+            "purpose": "A picture of an address: Google Street View, or a map with a pin where there is no panorama.",
+            "when": "Beside an address in a form or a card, so the reader sees the building. It shows nothing without a Maps key or when Google refuses the pictures; it is never needed to fill a form.",
+            "props": {
+                "address": "The address Google looks up, in one line without the unit; nothing is shown without one.",
+                "unit": "The apartment or suite, said under the picture."
+            },
+            "slots": {},
+            "events": {}
+        },
+        "UiMap": {
+            "purpose": "A Google Maps canvas with polygons on it, painted and culled by the parent.",
+            "when": "A screen that shows or edits areas on a map. The parent passes the polygons to keep on the map and a style per polygon, and listens to clicks, the pointer and the viewport. Give it a height with a layout class.",
+            "props": {
+                "features": "The GeoJSON polygons to keep on the map, by id; a new geometry under the same id replaces the old one.",
+                "featureStyle": "The fill, stroke and visibility of each polygon by id; a new function repaints them all.",
+                "center": "Where the map opens.",
+                "zoom": "The zoom it opens at.",
+                "loading": "Covers the map while the parent loads its data.",
+                "loadingLabel": "The word under the spinner while `loading`.",
+                "info": "The small panel in the corner: what is under the pointer.",
+                "label": "What a screen reader calls the map."
+            },
+            "slots": {},
+            "events": {
+                "ready": "Once the map has loaded.",
+                "viewport": "After every pan and zoom: the bounds on screen and the zoom.",
+                "feature_click": "A polygon was clicked; carries its id.",
+                "feature_hover": "The pointer entered a polygon (its id) or left it (null)."
+            }
+        },
+        "UiCodeBlock": {
+            "purpose": "Preformatted text or data as the machine wrote it, with a copy button.",
+            "when": "A payload of a provider event, the extra data of a session, a raw request: something read by a developer or support, not by an operator. Data a person reads is a UiDescriptionList.",
+            "props": {
+                "value": "A string is shown as is; anything else as indented JSON.",
+                "maxHeight": "How tall the block grows before it scrolls inside: `sm` 10rem, `md` 20rem, `lg` 32rem.",
+                "collapsible": "Folded under its label (details and summary) until the reader opens it.",
+                "label": "The name of the data: the summary when collapsible, a caption above otherwise, and the name of the scrolling region.",
+                "open": "Collapsible only: unfolded at first."
+            },
+            "slots": {},
+            "events": {}
+        },
+        "UiSwatch": {
+            "purpose": "A small square of a color, with the word it stands for.",
+            "when": "The color of a record that is drawn in that color elsewhere (an area on the map), or a key of a map legend. A state of a record is a UiBadge, not a swatch.",
+            "props": {
+                "color": "The fill, as CSS color.",
+                "border": "A border of another color; by default the fill.",
+                "size": "`sm` for a row of a list, `md` with a thick border for a legend."
+            },
+            "slots": {
+                "default": "The word after the square."
+            },
+            "events": {}
+        },
+        "UiEmbedFrame": {
+            "purpose": "A page of another service inside ours, put in by that service's own embed.js and grown to its height.",
+            "when": "A page of another service shown inside a screen of ours. Give it only an address the backend handed over at the moment the person asked (a short-lived ticket), never one built on the page; it loads `<origin>/embed.js` once, says loading and a failure in words, and removes the frame when it goes. An address that is not http(s) is a failure at once.",
+            "props": {
+                "url": "The address of the page, as the backend gave it.",
+                "title": "What a screen reader says of the frame."
+            },
+            "slots": {},
+            "events": {}
+        },
+        "UiAlert": {
+            "purpose": "A message that stays on the page.",
+            "when": "Something the reader should know while on this screen: a limit, a refusal, a warning about test mode. For the result of an action that just happened, raise a toast.",
+            "props": {
+                "variant": "The kind of message; `danger` is announced as an alert.",
+                "title": "A bold first line.",
+                "dismissible": "A cross that emits `dismiss`; the page hides the alert."
+            },
+            "slots": {
+                "default": "The message."
+            },
+            "events": {
+                "dismiss": "When the cross is pressed."
+            }
+        },
+        "UiToaster": {
+            "purpose": "The corner where toasts appear; raised from code with useToast().",
+            "when": "The result of an action that just happened (saved, sent, failed). The layout mounts one UiToaster and turns the flash of every response into toasts; a page raises its own with useToast().",
+            "props": {},
+            "slots": {},
+            "events": {}
+        },
+        "UiModal": {
+            "purpose": "A dialog over the page with the focus trapped inside.",
+            "when": "A short form or a detail that does not deserve its own screen (add a contact, pick an address). Escape and the backdrop ask to close; the parent owns `open`.",
+            "props": {
+                "open": "Shown or not; the parent flips it on `close`.",
+                "title": "The heading, which also names the dialog for assistive tech.",
+                "description": "A line under the heading.",
+                "size": "The width."
+            },
+            "slots": {
+                "default": "The body; the first control gets the focus.",
+                "footer": "The buttons, right-aligned."
+            },
+            "events": {
+                "close": "Escape, the backdrop or the cross: the parent sets `open` to false."
+            }
+        },
+        "UiDrawer": {
+            "purpose": "A panel that slides in from the right over the page, with the focus trapped inside.",
+            "when": "The detail of a row the reader opens without leaving the list (an event from a log, a task from a board). A form that stands on its own is a UiModal; a record with tabs and history is its own screen.",
+            "props": {
+                "open": "Shown or not; bind with v-model:open.",
+                "title": "The heading, which also names the panel for assistive tech.",
+                "description": "A line under the heading.",
+                "size": "The width: `md` about 28rem, `lg` about 40rem; the full width of a phone either way."
+            },
+            "slots": {
+                "default": "The body; it scrolls inside the panel.",
+                "actions": "Icon buttons in the header, left of the close button (open the full record, copy).",
+                "footer": "The buttons, right-aligned at the bottom."
+            },
+            "events": {
+                "update_open": "Escape, the backdrop or the cross: false."
+            }
+        },
+        "UiConfirmDialog": {
+            "purpose": "\"Are you sure?\" with one action.",
+            "when": "Before anything that cannot be undone (merge, cancel, refund). The parent runs the action on `confirm` and closes the dialog when it is done.",
+            "props": {
+                "open": "Shown or not.",
+                "title": "The question.",
+                "message": "What will happen.",
+                "confirmLabel": "The word on the action button; \"Confirm\" otherwise.",
+                "cancelLabel": "The word on the other button; \"Cancel\" otherwise.",
+                "tone": "`danger` paints the action red.",
+                "processing": "The action is running: the buttons wait."
+            },
+            "slots": {
+                "default": "More content under the message."
+            },
+            "events": {
+                "confirm": "The reader confirmed.",
+                "cancel": "The reader declined, pressed Escape or the backdrop."
+            }
+        },
+        "UiSpinner": {
+            "purpose": "Something is loading.",
+            "when": "Inside a button, a search box or a chip while a request runs. For a whole block that loads, prefer UiSkeleton.",
+            "props": {
+                "size": "Diameter.",
+                "label": "What assistive tech reads; \"Loading\" otherwise."
+            },
+            "slots": {},
+            "events": {}
+        },
+        "UiSkeleton": {
+            "purpose": "A grey placeholder in the shape of what is loading.",
+            "when": "Lines of text, a block or a circle while the data is on its way, so the layout does not jump.",
+            "props": {
+                "shape": "Lines of text, a block or a circle.",
+                "lines": "How many lines, for `text`."
+            },
+            "slots": {},
+            "events": {}
+        },
+        "UiEmptyState": {
+            "purpose": "What a list says when there is nothing in it.",
+            "when": "An empty table, card or screen: the name of what is missing, a line about it, and the one thing to do.",
+            "props": {
+                "title": "What is missing.",
+                "description": "Why, or what to do about it.",
+                "size": "`sm` inside a table cell or a card."
+            },
+            "slots": {
+                "icon": "The icon in the circle; an inbox otherwise.",
+                "action": "A button under the words."
+            },
+            "events": {}
+        },
+        "UiTooltip": {
+            "purpose": "A short hint over an element, on hover and on focus.",
+            "when": "An icon button or a truncated value that needs a word; never the only way to learn something essential.",
+            "props": {
+                "text": "The hint.",
+                "side": "Where it appears."
+            },
+            "slots": {
+                "default": "The element the hint belongs to (one element)."
+            },
+            "events": {}
+        },
+        "UiTabs": {
+            "purpose": "Tabs over the data of one screen.",
+            "when": "Sections of one record (contacts, addresses, history). Navigation between screens is the sidebar, not tabs.",
+            "props": {
+                "tabs": "The tabs in order; `count` shows a number, `disabled` greys one out.",
+                "modelValue": "The value of the active tab; bind with v-model."
+            },
+            "slots": {
+                "default": "The UiTabPanel children."
+            },
+            "events": {
+                "update_modelValue": "When another tab is picked."
+            }
+        },
+        "UiTabPanel": {
+            "purpose": "The content of one tab.",
+            "when": "Inside UiTabs, one per tab, with the tab's `value`.",
+            "props": {
+                "value": "The tab this panel belongs to."
+            },
+            "slots": {
+                "default": "The content."
+            },
+            "events": {}
+        },
+        "UiTabNav": {
+            "purpose": "The tabs of one record when each tab has its own address: links with an icon and a figure.",
+            "when": "A record worked on in sections that each open by URL, as a project with Overview, Tasks and Files. A column beside the record on a wide screen, a scrolling row on a narrow one. Tabs within one screen are UiTabs.",
+            "props": {
+                "items": "The tabs in order: `key`, the word, the address, an optional figure and icon.",
+                "current": "The key of the open tab.",
+                "label": "The name of the navigation for assistive tech."
+            },
+            "slots": {},
+            "events": {}
+        },
+        "UiDropdown": {
+            "purpose": "A menu under a trigger with keyboard navigation.",
+            "when": "Several actions behind one button (row actions, the account menu). The trigger is one element in the `trigger` slot; the items are UiDropdownItem.",
+            "props": {
+                "align": "Which edge of the trigger the menu lines up with.",
+                "side": "Which side of the trigger the menu opens on."
+            },
+            "slots": {
+                "trigger": "The element that opens the menu (one element).",
+                "default": "UiDropdownItem and UiDropdownSeparator children."
+            },
+            "events": {}
+        },
+        "UiDropdownItem": {
+            "purpose": "One line of a menu: a link or an action.",
+            "when": "Inside UiDropdown. With `href` it navigates; otherwise it emits `select`.",
+            "props": {
+                "href": "Where the item navigates.",
+                "newTab": "With `href`: opens it in a new tab outside the app's router (a screen of another app).",
+                "tone": "`danger` for sign out, delete and the like.",
+                "disabled": "Shown, not pickable."
+            },
+            "slots": {
+                "default": "The word.",
+                "icon": "An icon before the word."
+            },
+            "events": {
+                "select": "When picked, unless `href` is set."
+            }
+        },
+        "UiDropdownSeparator": {
+            "purpose": "A line between groups of menu items.",
+            "when": "Inside UiDropdown, between unrelated items (the way out below the rest).",
+            "props": {},
+            "slots": {},
+            "events": {}
+        },
+        "UiPagination": {
+            "purpose": "The pages of a list, with the first, the last and the neighbours of the current one.",
+            "when": "Under a UiTable whose rows come one page at a time. The parent fetches the page it is asked for.",
+            "props": {
+                "page": "The current page; bind with v-model:page.",
+                "lastPage": "How many pages there are.",
+                "total": "How many rows in all, for the summary in the corner.",
+                "perPage": "Rows per page, for the summary."
+            },
+            "slots": {},
+            "events": {
+                "update_page": "The page the reader asked for."
+            }
+        },
+        "UiPageHeader": {
+            "purpose": "The top of a screen: crumbs, title, a line under it, the actions on the right.",
+            "when": "First element of every page. The layout persists, so the header belongs to the page.",
+            "props": {
+                "title": "The heading of the screen.",
+                "lead": "A line under the heading.",
+                "breadcrumbs": "Where the reader is; the last crumb is the current page."
+            },
+            "slots": {
+                "actions": "The buttons on the right.",
+                "meta": "Small facts under the lead (an id, a date, a badge).",
+                "default": "Anything else under the header (a group nav)."
+            },
+            "events": {}
+        },
+        "UiBreadcrumbs": {
+            "purpose": "Where the reader is: every crumb but the last is a link.",
+            "when": "Inside UiPageHeader through its `breadcrumbs` prop; on its own only where there is no header.",
+            "props": {
+                "items": "The crumbs in order; the last one has no `href`."
+            },
+            "slots": {},
+            "events": {}
+        },
+        "UiChip": {
+            "purpose": "A small rounded label the reader can pick.",
+            "when": "Sections of a page, filter tokens, anchors further down the screen. The active one is marked; with `href` it navigates, without it emits `select`.",
+            "props": {
+                "href": "Where it navigates: the app's link, or a plain anchor when it starts with #.",
+                "active": "The current one, painted in brand.",
+                "mono": "Monospace text, for a code name.",
+                "disabled": "Shown, not clickable (button only)."
+            },
+            "slots": {
+                "default": "The word."
+            },
+            "events": {
+                "select": "When pressed, unless `href` is set."
+            }
+        },
+        "UiKbd": {
+            "purpose": "A key of the keyboard.",
+            "when": "A hint about a shortcut (Esc to close, / to search).",
+            "props": {},
+            "slots": {
+                "default": "The key."
+            },
+            "events": {}
+        },
+        "UiDisclosure": {
+            "purpose": "A block that opens and closes under its own title.",
+            "when": "A secondary table or detail the reader opens when needed, as a \"Done by day\" table under a report. Closed by default; a block that is always needed is a UiCard.",
+            "props": {
+                "title": "The heading, which is also the toggle.",
+                "lead": "A line under the heading.",
+                "defaultOpen": "Opens the block on the first render."
+            },
+            "slots": {
+                "default": "The content, shown while open.",
+                "meta": "Beside the title, visible while closed (a count, a badge)."
+            },
+            "events": {
+                "update_open": "When the block opens or closes."
+            }
+        },
+        "UiCard": {
+            "purpose": "A bordered surface with an optional heading row and footer.",
+            "when": "A block of a screen with its own title (contacts, addresses, a form). `padding=\"none\"` lets a UiTable fill it edge to edge.",
+            "props": {
+                "title": "The heading of the block.",
+                "lead": "A line under the heading.",
+                "padding": "`none` for a table that fills the card."
+            },
+            "slots": {
+                "default": "The content.",
+                "actions": "Buttons in the heading row.",
+                "footer": "A row under the content."
+            },
+            "events": {}
+        },
+        "UiList": {
+            "purpose": "Rows with a line between them.",
+            "when": "A short list of things with an action on each (the ways to sign in, the permissions of a group); the rows are UiListItem. A list of records with columns is a UiTable.",
+            "props": {
+                "bordered": "A border and a background of its own; otherwise it sits in a card.",
+                "dense": "Tighter rows.",
+                "divided": "A line above the first row too, to part the list from what stands above it."
+            },
+            "slots": {
+                "default": "The UiListItem rows."
+            },
+            "events": {}
+        },
+        "UiListItem": {
+            "purpose": "One row of a UiList.",
+            "when": "Inside UiList: a title with a line under it, an icon before it, the badge or the button after it.",
+            "props": {
+                "title": "The main text of the row; the default slot replaces it.",
+                "description": "A smaller line under the title.",
+                "mono": "The title in monospace, for a name from the code.",
+                "selectable": "The title becomes a button that emits `select`: a list to pick one row from.",
+                "selected": "Marks the picked row of a selectable list."
+            },
+            "slots": {
+                "default": "The main text, when it is more than a title.",
+                "leading": "An icon before the text.",
+                "trailing": "What stands on the right: a badge, a button."
+            },
+            "events": {
+                "select": "The title of a selectable row was pressed."
+            }
+        },
+        "UiDivider": {
+            "purpose": "A line between two parts, or a word in the middle of one.",
+            "when": "Between sections of a form, between items of a toolbar (`vertical`), or \"or\" between two ways to sign in.",
+            "props": {
+                "vertical": "A short vertical line for a toolbar."
+            },
+            "slots": {
+                "default": "The word in the middle of the line."
+            },
+            "events": {}
+        },
+        "UiAudioPlayer": {
+            "purpose": "The browser's own player of a sound file: play, pause, the time line and the volume.",
+            "when": "A recording on a card. The page gives the file's address when it has one (a link asked at the moment of listening); nothing loads before the person presses play. `play` tells the page a play started, so it can renew a link that ran out; the exposed `element` starts, seeks and stops it.",
+            "props": {
+                "src": "The address of the sound file.",
+                "label": "What a screen reader calls the player."
+            },
+            "slots": {},
+            "events": {
+                "play": "A play started.",
+                "error": "The file did not load (a link that ran out, a network failure)."
+            }
+        },
+        "UiAppShell": {
+            "purpose": "The frame of every signed-in screen: the dark sidebar with the brand, the menu and a footer, and the page beside it.",
+            "when": "Once, in the layout of the signed-in screens. On a phone the sidebar becomes a drawer behind a menu button in a top bar; it closes when the path changes, and `closeMenu` of the footer slot closes it before an item opens a dialog.",
+            "props": {
+                "brand": "The product's name at the top of the sidebar; its first letter is the mark."
+            },
+            "slots": {
+                "default": "The page.",
+                "nav": "The menu: UiNavItem lines.",
+                "footer": "Under the menu: who is signed in, the language, sign out. Gets `closeMenu`."
+            },
+            "events": {}
+        },
+        "UiNavItem": {
+            "purpose": "One line of the dark sidebar: a screen to open or an action.",
+            "when": "Inside the `nav` or `footer` slot of UiAppShell. With `href` it is the app's link and marks itself current while the path is `activePrefix` or under it; without `href` it is a button that emits `click`.",
+            "props": {
+                "label": "The words of the line.",
+                "icon": "The icon component before the words.",
+                "href": "The screen it opens; none makes it a button.",
+                "activePrefix": "The path under which the line is the current one."
+            },
+            "slots": {},
+            "events": {
+                "click": "The line without `href` was pressed."
+            }
+        },
+        "UiSidebarIdentity": {
+            "purpose": "Who is signed in, at the foot of the dark sidebar: the name and a caption under it.",
+            "when": "In the `footer` slot of UiAppShell, above the language and sign out.",
+            "props": {
+                "name": "The person's name.",
+                "caption": "The line under it, usually the role."
+            },
+            "slots": {},
+            "events": {}
+        },
+        "UiSidebarSelect": {
+            "purpose": "A small native select drawn for the dark sidebar.",
+            "when": "A short choice in the sidebar, such as the language. On a light surface it is a UiSelect.",
+            "props": {
+                "modelValue": "The chosen value; bind with v-model.",
+                "options": "The options in order.",
+                "label": "What a screen reader calls the select."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "Another option was chosen."
+            }
+        },
+        "UiAuthFrame": {
+            "purpose": "The frame of the pages a guest sees: the product's name and one card in the middle.",
+            "when": "Sign in, a link that ran out, a page that cannot be reached without an account. Everything else is inside UiAppShell.",
+            "props": {
+                "brand": "The product's name above the card.",
+                "title": "The heading of the card.",
+                "lead": "A line under the heading."
+            },
+            "slots": {
+                "default": "The content of the card, usually a UiForm.",
+                "footer": "Under the card: a link or the language."
+            },
+            "events": {}
+        }
+    },
+    "samples": {
+        "street_view_address": "1 Example Street, Springfield",
+        "street_view_unit": "Suite 200",
+        "embed_title": "Sample page of a service",
+        "lost_tree": "Result",
+        "combobox_label": "Find a project",
+        "combobox_placeholder": "Name or number",
+        "combobox_short": "Type at least three characters.",
+        "combobox_create": "Create \":q\"",
+        "tab_nav_label": "Project sections",
+        "tab_nav_overview": "Overview",
+        "tab_nav_tasks": "Tasks",
+        "tab_nav_files": "Files",
+        "chip_priority": "Priority",
+        "chip_type_hint": "Pick the chosen chip again to clear it.",
+        "chip_low": "Low",
+        "chip_normal": "Normal",
+        "chip_high": "High",
+        "chip_frozen": "Frozen (not taken)",
+        "place_address": "Address",
+        "place_address_hint": "Pick a suggestion; the fields below fill in.",
+        "place_picked": "Picked",
+        "rich_message": "Note for the team",
+        "rich_message_sample": "<p><b>Do not</b> merge to the main branch on Fridays.</p><p><span style=\"color: #e60000\">Questions about access go to the admin on duty.</span></p>",
+        "rich_bold": "Bold",
+        "rich_italic": "Italic",
+        "rich_underline": "Underline",
+        "rich_color": "Text colour",
+        "rich_background": "Background colour",
+        "rich_clear": "Clear the marks",
+        "rich_nothing": "No message.",
+        "invite_link": "Invite link",
+        "done_by_day": "Done by day & assignee",
+        "done_by_day_lead": "Last 30 days",
+        "done_day": "Day",
+        "done_total": "Total",
+        "file": "Members file",
+        "file_hint": "xlsx or csv with the columns name, email, team.",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "more": "More",
+        "open": "Open",
+        "loading": "Saving",
+        "disabled": "Disabled",
+        "block": "Full width",
+        "new_project": "New project",
+        "export": "Export",
+        "edit": "Edit",
+        "copy": "Copy the id",
+        "pin": "Pin",
+        "email": "Email",
+        "email_hint": "The work address; the letter with the link goes there.",
+        "email_error": "The email field must be a valid email address.",
+        "phone": "Phone",
+        "phone_placeholder": "+1 555 0100",
+        "name": "Name",
+        "notes": "Notes",
+        "notes_hint": "What the team should know about this project.",
+        "team": "Team",
+        "any_team": "Any team",
+        "team_error": "Pick a team.",
+        "primary": "Primary",
+        "primary_hint": "The address we write to first.",
+        "terms": "I accept the terms",
+        "terms_error": "You must accept the terms.",
+        "auto_renew": "Auto-renewal",
+        "auto_renew_hint": "The card is charged at the end of each period.",
+        "notifications": "Notifications",
+        "send_by": "Send by",
+        "by_email": "Email",
+        "by_email_hint": "A letter with the link",
+        "by_sms": "SMS",
+        "by_hand": "By hand",
+        "address": "Address",
+        "street": "Street",
+        "city": "City",
+        "form_error": "The project could not be saved: a project with this name already exists.",
+        "status_draft": "draft",
+        "status_sent": "sent",
+        "status_active": "active",
+        "status_past_due": "past due",
+        "status_canceled": "canceled",
+        "password": "Password",
+        "new_password": "New password",
+        "roles": "Roles",
+        "roles_hint": "A user may hold several roles.",
+        "role_admin": "Administrator",
+        "role_editor": "Editor",
+        "role_viewer": "Viewer",
+        "role_viewer_hint": "Reads everything, changes nothing.",
+        "status": "Status",
+        "created": "Created",
+        "last_sign_in": "Last sign-in",
+        "never": "never",
+        "ways_to_sign_in": "Ways to sign in",
+        "linked": "linked",
+        "not_linked": "not linked",
+        "unlink": "Unlink",
+        "link": "Link",
+        "status_new": "new",
+        "alert_info": "The newest 50 events are shown; narrow the filter for older ones.",
+        "alert_success": "The link has been sent to jane.doe@example.com.",
+        "alert_warning": "Payments are in test mode: no real card is charged.",
+        "alert_danger": "No project matches this id.",
+        "alert_title": "Heads up",
+        "toast_success": "Saved.",
+        "toast_error": "Could not save.",
+        "toast_info": "The import runs in the background.",
+        "toast_neutral": "Copied.",
+        "toast_message": "The project has a new owner.",
+        "tooltip": "The public id of the record",
+        "search_placeholder": "Name or email",
+        "filter_status": "Status",
+        "filter_from": "From",
+        "filter_until": "Until",
+        "any": "any",
+        "col_owner": "Owner",
+        "col_plan": "Plan",
+        "col_status": "Status",
+        "col_price": "Price",
+        "col_since": "Since",
+        "table_empty": "No subscriptions match.",
+        "toggle_loading": "Loading",
+        "toggle_empty": "Empty",
+        "toggle_clickable": "Clickable rows",
+        "toggle_tinted": "Tinted rows",
+        "toggle_pulsing": "Blinking row",
+        "toggle_sticky": "Sticky first column",
+        "row_clicked": "Row: :name",
+        "modal_title": "Add a contact",
+        "modal_description": "A phone or an email the team may use.",
+        "modal_sm": "Small",
+        "modal_md": "Medium",
+        "modal_lg": "Large",
+        "drawer_title": "Task",
+        "drawer_md": "Narrow panel",
+        "drawer_lg": "Wide panel",
+        "drawer_open_full": "Open the task",
+        "drawer_from": "Opened",
+        "drawer_to": "Due",
+        "drawer_duration": "Time spent",
+        "chart_by_day": "Tasks by day, November",
+        "chart_by_team": "Tasks by team",
+        "chart_done": "Done",
+        "chart_overdue": "Overdue",
+        "chart_overdue_urgent": "Overdue, urgent",
+        "chart_empty": "No tasks in this period.",
+        "code_payload": "Payload",
+        "code_note": "Build note",
+        "code_text": "The build passed the unit stage, then timed out while uploading the artifacts. A retry at 14:05 failed the same way; a run on another worker is due.",
+        "owner": "Owner",
+        "any_owner": "All owners",
+        "all_tags": "All tags",
+        "confirm_title": "Merge projects?",
+        "confirm_message": "Tasks and files move to this project; the other one is marked merged. This cannot be undone.",
+        "confirm_label": "Merge",
+        "confirmed": "Confirmed.",
+        "menu_profile": "Profile",
+        "menu_tokens": "API tokens",
+        "menu_sign_out": "Sign out",
+        "tab_contacts": "Contacts",
+        "tab_addresses": "Addresses",
+        "tab_history": "History",
+        "tab_contacts_body": "Phones and emails of the person.",
+        "tab_addresses_body": "Where the person works.",
+        "tab_history_body": "Changes, comments and payments.",
+        "crumb_people": "People",
+        "crumb_person": "Jane Doe",
+        "crumb_merge": "Merge",
+        "page_title": "Jane Doe",
+        "page_lead": "Member since May 2026 · 2 projects · admin",
+        "invite": "Invite to a project",
+        "card_title": "Contacts",
+        "card_lead": "How to reach the person.",
+        "card_body": "The content of the card.",
+        "card_footer": "Updated today.",
+        "empty_title": "No tasks yet",
+        "empty_description": "They appear here as the team adds them.",
+        "empty_action": "Add a task",
+        "stat_tasks": "Tasks today",
+        "stat_overdue": "Overdue",
+        "stat_members": "Active members",
+        "stat_revenue": "Sales this month",
+        "stat_hint": "as of today",
+        "list_title": "Subscriptions",
+        "list_lead": "Plans of the workspace: offered, sent, paid, ended.",
+        "list_create": "New plan",
+        "escape": "Esc",
+        "or": "or",
+        "map_loading": "Loading polygons…",
+        "map_area": "Sample area",
+        "map_none": "No area",
+        "swatch_added": "Added to the area",
+        "swatch_removed": "Removed from the area",
+        "tags": "Tags",
+        "audio_label": "Recording of the meeting",
+        "audio_played": "Playing.",
+        "language": "Language",
+        "login_title": "Sign in",
+        "login_lead": "Use the email and password of your account.",
+        "login_help": "Forgot the password?"
+    }
+}
