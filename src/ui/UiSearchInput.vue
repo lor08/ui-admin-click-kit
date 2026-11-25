@@ -2,7 +2,7 @@
 import UiInput from './UiInput.vue';
 import UiSpinner from './UiSpinner.vue';
 import { useTrans } from './kit';
-import { Search, X } from 'lucide-vue-next';
+import { Search, X } from '@lucide/vue';
 import { onBeforeUnmount, useAttrs, watch } from 'vue';
 import { splitAttrs } from './attrs';
 import type { ControlSize } from './styles';

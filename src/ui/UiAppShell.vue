@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UiIconButton from './UiIconButton.vue';
 import { kitPath, useTrans } from './kit';
-import { Menu } from 'lucide-vue-next';
+import { Menu } from '@lucide/vue';
 import { DialogContent, DialogOverlay, DialogPortal, DialogRoot, DialogTitle } from 'reka-ui';
 import { ref, watch } from 'vue';
 

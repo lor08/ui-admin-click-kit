@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UiIconButton from '../../ui/UiIconButton.vue';
 import { useTrans } from '../words';
-import { Copy, Pencil, Pin, Plus, Trash2 } from 'lucide-vue-next';
+import { Copy, Pencil, Pin, Plus, Trash2 } from '@lucide/vue';
 import { ref } from 'vue';
 
 const t = useTrans();

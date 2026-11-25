@@ -2,7 +2,7 @@
 import UiIconButton from '../../ui/UiIconButton.vue';
 import UiTooltip from '../../ui/UiTooltip.vue';
 import { useTrans } from '../words';
-import { Copy } from 'lucide-vue-next';
+import { Copy } from '@lucide/vue';
 
 const t = useTrans();
 </script>

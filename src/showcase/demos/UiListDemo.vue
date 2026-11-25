@@ -4,7 +4,7 @@ import UiButton from '../../ui/UiButton.vue';
 import UiList from '../../ui/UiList.vue';
 import UiListItem from '../../ui/UiListItem.vue';
 import { useTrans } from '../words';
-import { KeyRound, Send } from 'lucide-vue-next';
+import { KeyRound, Send } from '@lucide/vue';
 import { ref } from 'vue';
 
 const t = useTrans();

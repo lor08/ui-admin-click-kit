@@ -5,7 +5,7 @@ import UiDropdownItem from '../../ui/UiDropdownItem.vue';
 import UiDropdownSeparator from '../../ui/UiDropdownSeparator.vue';
 import { useToast } from '../../ui/toast';
 import { useTrans } from '../words';
-import { ChevronDown, Key, LogOut, User } from 'lucide-vue-next';
+import { ChevronDown, Key, LogOut, User } from '@lucide/vue';
 
 const t = useTrans();
 const toast = useToast();

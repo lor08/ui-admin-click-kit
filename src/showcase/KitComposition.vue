@@ -10,7 +10,7 @@ import UiPagination from '../ui/UiPagination.vue';
 import UiSelect from '../ui/UiSelect.vue';
 import UiTable, { type UiTableColumn } from '../ui/UiTable.vue';
 import { useTrans } from './words';
-import { Plus } from 'lucide-vue-next';
+import { Plus } from '@lucide/vue';
 import { reactive, ref } from 'vue';
 
 /** A list screen composed from the kit: the pattern a new list screen copies. */

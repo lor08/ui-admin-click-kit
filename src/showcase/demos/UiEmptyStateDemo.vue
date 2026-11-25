@@ -2,7 +2,7 @@
 import UiButton from '../../ui/UiButton.vue';
 import UiEmptyState from '../../ui/UiEmptyState.vue';
 import { useTrans } from '../words';
-import { Inbox } from 'lucide-vue-next';
+import { Inbox } from '@lucide/vue';
 
 const t = useTrans();
 </script>

@@ -28,7 +28,7 @@ The kit expects these in the host (peer dependencies):
 |---|---|---|
 | `vue` | `^3.5.42` | |
 | `reka-ui` | `^2.11.0` | |
-| `lucide-vue-next` | `^1.0.0` | |
+| `@lucide/vue` | `^1.78.0` | |
 | `@googlemaps/js-api-loader` | `^2.1.3` | optional: only for `UiMap`, `UiPlaceInput` and the address helpers |
 
 `@types/google.maps` comes with the kit, so a host type-checks the map

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UiTabNav from '../../ui/UiTabNav.vue';
 import { useTrans } from '../words';
-import { FileText, LayoutDashboard, ListTodo } from 'lucide-vue-next';
+import { FileText, LayoutDashboard, ListTodo } from '@lucide/vue';
 
 const t = useTrans();
 const items = [

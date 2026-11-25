@@ -5,7 +5,7 @@ import type { UiSelectOption } from './UiSelect.vue';
 import { splitAttrs } from './attrs';
 import { controlBase, controlSizes, controlState } from './styles';
 import { useTrans } from './kit';
-import { Check, ChevronDown } from 'lucide-vue-next';
+import { Check, ChevronDown } from '@lucide/vue';
 import { ListboxContent, ListboxFilter, ListboxItem, ListboxItemIndicator, ListboxRoot, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger, type AcceptableValue } from 'reka-ui';
 import { computed, ref, useAttrs, watch } from 'vue';
 

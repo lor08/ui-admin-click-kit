@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UiStatCard from '../../ui/UiStatCard.vue';
 import { useTrans } from '../words';
-import { CalendarX, CreditCard, ListTodo } from 'lucide-vue-next';
+import { CalendarX, CreditCard, ListTodo } from '@lucide/vue';
 
 const t = useTrans();
 </script>

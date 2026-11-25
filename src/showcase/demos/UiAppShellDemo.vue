@@ -7,7 +7,7 @@ import UiSidebarSelect from '../../ui/UiSidebarSelect.vue';
 import { useToast } from '../../ui/toast';
 import { kitPath } from '../../ui/kit';
 import { useTrans } from '../words';
-import { FileText, LayoutDashboard, ListTodo, LogOut } from 'lucide-vue-next';
+import { FileText, LayoutDashboard, ListTodo, LogOut } from '@lucide/vue';
 import { ref } from 'vue';
 
 const t = useTrans();

@@ -2,7 +2,7 @@
 import UiSkeleton from './UiSkeleton.vue';
 import type { Tone } from './styles';
 import { useTrans } from './kit';
-import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-vue-next';
+import { ArrowDown, ArrowUp, ArrowUpDown } from '@lucide/vue';
 import { computed, ref } from 'vue';
 
 export interface UiTableColumn {

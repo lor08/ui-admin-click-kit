@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UiIconButton from './UiIconButton.vue';
 import { useTrans } from './kit';
-import { ChevronLeft, ChevronRight } from 'lucide-vue-next';
+import { ChevronLeft, ChevronRight } from '@lucide/vue';
 import { computed } from 'vue';
 
 /**

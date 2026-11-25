@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UiIconButton from './UiIconButton.vue';
 import { useTrans } from './kit';
-import { CircleCheck, CircleX, Info, TriangleAlert } from 'lucide-vue-next';
+import { CircleCheck, CircleX, Info, TriangleAlert } from '@lucide/vue';
 import { computed } from 'vue';
 
 type Variant = 'info' | 'warning' | 'success' | 'danger';

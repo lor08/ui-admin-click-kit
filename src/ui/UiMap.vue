@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UiSpinner from './UiSpinner.vue';
 import { kitLocale, useTrans } from './kit';
-import { MapPinOff } from 'lucide-vue-next';
+import { MapPinOff } from '@lucide/vue';
 import { onBeforeUnmount, onMounted, ref, toRaw, watch } from 'vue';
 import { configureMaps, mapsKey, mapsLoader, type MapBounds, type MapFeature, type MapFeatureStyle, type MapGeometry, type MapInfo, type MapPoint, type MapViewport } from './map';
 

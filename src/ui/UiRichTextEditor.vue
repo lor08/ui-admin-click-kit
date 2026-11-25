@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UiFormField from './UiFormField.vue';
 import UiIconButton from './UiIconButton.vue';
-import { Baseline, Bold, Highlighter, Italic, RemoveFormatting, Underline } from 'lucide-vue-next';
+import { Baseline, Bold, Highlighter, Italic, RemoveFormatting, Underline } from '@lucide/vue';
 import { onMounted, ref, watch } from 'vue';
 import { controlBase, controlState } from './styles';
 

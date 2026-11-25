@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Inbox } from 'lucide-vue-next';
+import { Inbox } from '@lucide/vue';
 
 /** What a list says when there is nothing in it, with the one thing to do about it. */
 withDefaults(defineProps<{ title: string; description?: string | null; size?: 'sm' | 'md' }>(), { description: null, size: 'md' });

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTrans } from './kit';
 import { kitLink } from './kit';
-import { ChevronRight } from 'lucide-vue-next';
+import { ChevronRight } from '@lucide/vue';
 
 export interface UiBreadcrumb {
     label: string;

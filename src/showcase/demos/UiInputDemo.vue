@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UiInput from '../../ui/UiInput.vue';
 import { useTrans } from '../words';
-import { Phone } from 'lucide-vue-next';
+import { Phone } from '@lucide/vue';
 import { reactive } from 'vue';
 
 const t = useTrans();

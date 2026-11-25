@@ -2,7 +2,7 @@
 import UiIconButton from './UiIconButton.vue';
 import { writeClipboard } from './clipboard';
 import { useTrans } from './kit';
-import { Check, ChevronRight, Copy } from 'lucide-vue-next';
+import { Check, ChevronRight, Copy } from '@lucide/vue';
 import { computed, ref } from 'vue';
 
 type Height = 'sm' | 'md' | 'lg';

@@ -2,7 +2,7 @@
 import UiButton from '../../ui/UiButton.vue';
 import UiPageHeader from '../../ui/UiPageHeader.vue';
 import { useTrans } from '../words';
-import { Plus } from 'lucide-vue-next';
+import { Plus } from '@lucide/vue';
 
 const t = useTrans();
 </script>

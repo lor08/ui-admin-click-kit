@@ -5,7 +5,7 @@ import UiDrawer from '../../ui/UiDrawer.vue';
 import UiIconButton from '../../ui/UiIconButton.vue';
 import { useToast } from '../../ui/toast';
 import { useTrans } from '../words';
-import { ExternalLink } from 'lucide-vue-next';
+import { ExternalLink } from '@lucide/vue';
 import { ref } from 'vue';
 
 const t = useTrans();

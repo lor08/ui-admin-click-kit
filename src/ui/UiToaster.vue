@@ -2,7 +2,7 @@
 import UiIconButton from './UiIconButton.vue';
 import { useToast, type Toast } from './toast';
 import { useTrans } from './kit';
-import { CircleCheck, CircleX, Info, TriangleAlert, X } from 'lucide-vue-next';
+import { CircleCheck, CircleX, Info, TriangleAlert, X } from '@lucide/vue';
 import { onBeforeUnmount, watch } from 'vue';
 import type { Tone } from './styles';
 

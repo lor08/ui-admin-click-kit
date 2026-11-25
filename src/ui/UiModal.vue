@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UiIconButton from './UiIconButton.vue';
 import { useTrans } from './kit';
-import { X } from 'lucide-vue-next';
+import { X } from '@lucide/vue';
 import { DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle } from 'reka-ui';
 
 type Size = 'sm' | 'md' | 'lg' | 'xl';

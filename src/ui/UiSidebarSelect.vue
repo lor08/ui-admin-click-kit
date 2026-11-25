@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { UiSelectOption } from './UiSelect.vue';
-import { ChevronDown } from 'lucide-vue-next';
+import { ChevronDown } from '@lucide/vue';
 
 /** A small native select drawn for the dark sidebar (the language switch); UiSelect is for light surfaces. */
 const props = defineProps<{ modelValue: string; options: UiSelectOption[]; label: string }>();

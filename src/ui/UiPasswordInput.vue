@@ -3,7 +3,7 @@ import UiFormField from './UiFormField.vue';
 import { controlBase, controlSizes, controlState, type ControlSize } from './styles';
 import { splitAttrs } from './attrs';
 import { useTrans } from './kit';
-import { Check, Eye, EyeOff } from 'lucide-vue-next';
+import { Check, Eye, EyeOff } from '@lucide/vue';
 import { computed, ref, useAttrs } from 'vue';
 
 /**

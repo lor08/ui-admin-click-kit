@@ -2,7 +2,7 @@
 /// <reference types="google.maps" />
 import UiFormField from './UiFormField.vue';
 import { kitLocale } from './kit';
-import { MapPin } from 'lucide-vue-next';
+import { MapPin } from '@lucide/vue';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { configureMaps, mapsKey, mapsLoader, placeToAddress, type PlaceAddress, type PlaceComponent } from './map';
 import { controlBase, controlSizes, controlState } from './styles';

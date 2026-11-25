@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UiButton from '../../ui/UiButton.vue';
 import { useTrans } from '../words';
-import { Pencil, Plus, Trash2 } from 'lucide-vue-next';
+import { Pencil, Plus, Trash2 } from '@lucide/vue';
 
 const t = useTrans();
 </script>

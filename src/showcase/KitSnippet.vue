@@ -3,7 +3,7 @@ import UiIconButton from '../ui/UiIconButton.vue';
 import { writeClipboard } from '../ui/clipboard';
 import { useToast } from '../ui/toast';
 import { useTrans } from './words';
-import { Check, Copy } from 'lucide-vue-next';
+import { Check, Copy } from '@lucide/vue';
 import { ref } from 'vue';
 
 /** The usage snippet of a component with the button that copies it. */

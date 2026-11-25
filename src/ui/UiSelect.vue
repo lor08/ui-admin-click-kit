@@ -3,7 +3,7 @@ import UiFormField from './UiFormField.vue';
 import { splitAttrs } from './attrs';
 import { useAttrs } from 'vue';
 import { controlBase, controlSizes, controlState, type ControlSize } from './styles';
-import { ChevronDown } from 'lucide-vue-next';
+import { ChevronDown } from '@lucide/vue';
 
 export interface UiSelectOption {
     value: string;
