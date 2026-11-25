@@ -116,6 +116,14 @@ The surfaces and lines a page is laid out with, and the tokens behind every colo
 | `UiSidebarSelect` (with `UiAppShell`) | A small native select drawn for the dark sidebar. | A short choice in the sidebar, such as the language. On a light surface it is a UiSelect. |
 | `UiAuthFrame` | The frame of the pages a guest sees: the product's name and one card in the middle. | Sign in, a link that ran out, a page that cannot be reached without an account. Everything else is inside UiAppShell. |
 
+## Softphone
+
+The parts of a softphone in the manner of Click's dock: the dark bar along the bottom of the page, its panels, the collapsed button, the keypad and the icons it draws by Click's names.
+
+| Component | Purpose | When to use |
+|---|---|---|
+| `UiIcon` | A Material Design icon by the name Click gives it (`phone`, `phone-hangup`, `dialpad`), drawn from its SVG path alone. | In the softphone and wherever a screen must show the same glyph as Click; elsewhere the kit draws lucide icons. It takes the size and the colour of the text around it. |
+
 ## Words
 
 The words a component needs by itself (close, previous, loading) are in `lang/*/ui.json`, under the `ui.` keys; the words of a screen are the host's. A component never holds a literal.

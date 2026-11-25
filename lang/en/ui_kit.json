@@ -47,6 +47,10 @@
         "layout": {
             "title": "Layout",
             "lead": "The surfaces and lines a page is laid out with, and the tokens behind every color and radius of the kit."
+        },
+        "softphone": {
+            "title": "Softphone",
+            "lead": "The parts of a softphone in the manner of Click's dock: the dark bar along the bottom of the page, its panels, the collapsed button, the keypad and the icons it draws by Click's names."
         }
     },
     "tokens": {
@@ -1102,6 +1106,16 @@
                 "default": "The content of the card, usually a UiForm.",
                 "footer": "Under the card: a link or the language."
             },
+            "events": {}
+        },
+        "UiIcon": {
+            "purpose": "A Material Design icon by the name Click gives it (`phone`, `phone-hangup`, `dialpad`), drawn from its SVG path alone.",
+            "when": "In the softphone and wherever a screen must show the same glyph as Click; elsewhere the kit draws lucide icons. It takes the size and the colour of the text around it.",
+            "props": {
+                "name": "The icon: a key of `ICONS` (`icons.ts`).",
+                "label": "Names the icon for a screen reader; without it the icon is decorative."
+            },
+            "slots": {},
             "events": {}
         }
     },

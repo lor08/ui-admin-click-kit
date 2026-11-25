@@ -29,6 +29,7 @@ import UiFormDemo from './demos/UiFormDemo.vue';
 import UiFormFieldDemo from './demos/UiFormFieldDemo.vue';
 import UiHelpTextDemo from './demos/UiHelpTextDemo.vue';
 import UiIconButtonDemo from './demos/UiIconButtonDemo.vue';
+import UiIconDemo from './demos/UiIconDemo.vue';
 import UiInputDemo from './demos/UiInputDemo.vue';
 import UiKbdDemo from './demos/UiKbdDemo.vue';
 import UiLabelDemo from './demos/UiLabelDemo.vue';
@@ -129,4 +130,5 @@ export const demos: Record<string, Component> = {
     UiDivider: UiDividerDemo,
     UiAppShell: UiAppShellDemo,
     UiAuthFrame: UiAuthFrameDemo,
+    UiIcon: UiIconDemo,
 };

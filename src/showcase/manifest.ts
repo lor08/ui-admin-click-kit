@@ -9,9 +9,9 @@
  * prop means) lives in lang/<locale>/ui_kit.json under
  * `components.<Name>`, so the showcase speaks both languages.
  */
-export type KitGroup = 'general' | 'buttons' | 'data' | 'feedback' | 'navigation' | 'layout';
+export type KitGroup = 'general' | 'buttons' | 'data' | 'feedback' | 'navigation' | 'layout' | 'softphone';
 
-export const kitGroups: KitGroup[] = ['general', 'buttons', 'data', 'feedback', 'navigation', 'layout'];
+export const kitGroups: KitGroup[] = ['general', 'buttons', 'data', 'feedback', 'navigation', 'layout', 'softphone'];
 
 export interface KitProp {
     name: string;
@@ -917,6 +917,16 @@ toast.push({ tone: 'info', title: t('imports.started'), timeout: 0 });`,
     <UiForm @submit="signIn">…</UiForm>
     <template #footer><UiButton variant="link" href="/help">{{ t('account.login.help') }}</UiButton></template>
 </UiAuthFrame>`,
+    },
+
+    // Softphone
+    {
+        name: 'UiIcon',
+        group: 'softphone',
+        props: [{ name: 'name', type: 'IconName' }, { name: 'label', type: 'string', default: 'undefined' }],
+        slots: [],
+        events: [],
+        snippet: `<UiIcon name="phone-incoming" />`,
     },
 ];
 
