@@ -9,6 +9,9 @@ import { ref, watch } from 'vue';
  * The frame of every signed-in screen: the dark sidebar on the left (brand,
  * `nav`, `footer`), the page on the right. On a phone the sidebar is a
  * drawer behind a menu button in a top bar; it closes when the path changes.
+ * `dock` is a bar along the bottom (UiDock, the softphone): the sidebar and
+ * the page end above the band it publishes as `--voice-dock-height`, none
+ * while there is no bar or it is collapsed to its button.
  */
 const props = defineProps<{ brand: string }>();
 
@@ -25,7 +28,7 @@ watch(kitPath, () => (mobileOpen.value = false));
 
 <template>
     <div class="min-h-screen bg-canvas">
-        <div class="fixed inset-y-0 left-0 z-30 hidden lg:block" data-test="desktop-sidebar">
+        <div class="fixed top-0 bottom-[var(--voice-dock-height,0px)] left-0 z-30 hidden lg:block" data-test="desktop-sidebar">
             <aside class="flex h-full w-[var(--width-sidebar)] flex-col bg-sidebar text-sidebar-ink" data-test="sidebar">
                 <div class="flex h-14 shrink-0 items-center gap-2 border-b border-sidebar-line px-4">
                     <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-control bg-brand-600 text-xs font-bold text-white" aria-hidden="true">{{ props.brand.charAt(0) }}</span>
@@ -53,7 +56,7 @@ watch(kitPath, () => (mobileOpen.value = false));
             </DialogPortal>
         </DialogRoot>
 
-        <div class="flex min-h-screen flex-col lg:pl-[var(--width-sidebar)]">
+        <div class="flex min-h-screen flex-col pb-[var(--voice-dock-height,0px)] lg:pl-[var(--width-sidebar)]">
             <header class="sticky top-0 z-20 flex h-14 items-center gap-2 border-b border-line bg-surface px-3 lg:hidden" data-test="header">
                 <UiIconButton :label="t('ui.shell.open_menu')" :aria-expanded="mobileOpen ? 'true' : 'false'" data-test="sidebar-toggle" @click="mobileOpen = true">
                     <Menu />
@@ -65,5 +68,6 @@ watch(kitPath, () => (mobileOpen.value = false));
                 <slot />
             </main>
         </div>
+        <slot name="dock" />
     </div>
 </template>

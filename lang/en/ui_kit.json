@@ -1048,7 +1048,8 @@
             "slots": {
                 "default": "The page.",
                 "nav": "The menu: UiNavItem lines.",
-                "footer": "Under the menu: who is signed in, the language, sign out. Gets `closeMenu`."
+                "footer": "Under the menu: who is signed in, the language, sign out. Gets `closeMenu`.",
+                "dock": "A bar along the bottom, UiDock: the sidebar and the page end above the band it publishes as `--voice-dock-height`."
             },
             "events": {}
         },

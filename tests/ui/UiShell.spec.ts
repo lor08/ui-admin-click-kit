@@ -67,6 +67,16 @@ describe('UiAppShell', () => {
         expect(document.querySelector('[data-test="mobile-sidebar"]')).toBeNull();
         wrapper.unmount();
     });
+
+    it('puts the dock after the page and ends the sidebar and the page above its band', () => {
+        const wrapper = mount(UiAppShell, { props: { brand: 'Acme Admin' }, slots: { default: '<p data-test="page">page</p>', dock: '<div data-test="dock">dock</div>' } });
+
+        expect(wrapper.get('[data-test="dock"]').text()).toBe('dock');
+        expect(wrapper.element.lastElementChild?.getAttribute('data-test')).toBe('dock');
+        expect(wrapper.get('[data-test="desktop-sidebar"]').classes()).toEqual(expect.arrayContaining(['top-0', 'bottom-[var(--voice-dock-height,0px)]']));
+        expect(wrapper.get('[data-test="desktop-sidebar"]').classes()).not.toContain('inset-y-0');
+        expect(wrapper.get('main').element.parentElement?.classList).toContain('pb-[var(--voice-dock-height,0px)]');
+    });
 });
 
 describe('the sidebar parts', () => {

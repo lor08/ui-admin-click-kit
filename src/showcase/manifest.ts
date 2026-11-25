@@ -851,7 +851,7 @@ toast.push({ tone: 'info', title: t('imports.started'), timeout: 0 });`,
         name: 'UiAppShell',
         group: 'layout',
         props: [{ name: 'brand', type: 'string' }],
-        slots: ['default', 'nav', 'footer'],
+        slots: ['default', 'nav', 'footer', 'dock'],
         events: [],
         snippet: `<UiAppShell :brand="t('app.name')">
     <template #nav>
