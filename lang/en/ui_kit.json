@@ -1117,6 +1117,293 @@
             },
             "slots": {},
             "events": {}
+        },
+        "UiDock": {
+            "purpose": "The softphone's frame, Click's VoiceDockBar: a dark bar 44 pixels high along the bottom of the page and, above its right end, the one panel open at a time.",
+            "when": "Once, in the `dock` slot of UiAppShell. The bar publishes the band it takes as `--voice-dock-height` on the root element (0 while collapsed), which the shell keeps free; `inline` puts it in the flow of an embedded page instead.",
+            "props": {
+                "inline": "In the flow of the page instead of fixed to the bottom of the window; publishes no height. For a page in a frame as high as its content.",
+                "collapsed": "Hides the bar and its panel and shows the `fab` slot instead."
+            },
+            "slots": {
+                "default": "The bar: chips, the number, buttons, spacers, the timer.",
+                "panel": "The panel over the bar's right end: a UiDockPanel.",
+                "ticker": "A line above the bar: a UiDockTicker.",
+                "fab": "What stands for the bar while it is collapsed: a UiDockFab."
+            },
+            "events": {}
+        },
+        "UiDockButton": {
+            "purpose": "A button of the softphone, Click's `.btn` of the dock.",
+            "when": "`ghost` on the dark bar, `light` on a white panel, `green` to call or answer, `red` to hang up or reject. With `href` it is a link that looks the same (a `tel:` link).",
+            "props": {
+                "variant": "The colour: `ghost`, `light`, `green` or `red`.",
+                "label": "Names a button with an icon alone; it is its tooltip too.",
+                "round": "The pill of the call's main action.",
+                "active": "Pressed: a toggle that is on (mute, hold, the open panel).",
+                "pulse": "Breathes, as the Answer of an incoming call does.",
+                "wide": "Across the panel, as its Dial.",
+                "small": "Smaller, for a button on a line of a panel.",
+                "disabled": "Shown, not pressable.",
+                "href": "Makes it a link to this address."
+            },
+            "slots": {
+                "default": "The icon and the word."
+            },
+            "events": {}
+        },
+        "UiDockChip": {
+            "purpose": "A pill of the dock, Click's `.chip`: the agent's status with its coloured point, the missed call to ring back, the second line.",
+            "when": "On the bar. A chip that holds buttons of its own (the second line's Answer and Decline) is `inert`.",
+            "props": {
+                "dot": "The point before the word: `ok` takes calls, `dnd` does not, `wait` is on its way, `err` failed, `off` is offline.",
+                "tone": "`miss` for a missed call, `line` for the second line, `sudo` while an admin works as another agent.",
+                "label": "The tooltip.",
+                "inert": "A span instead of a button, so it can hold buttons."
+            },
+            "slots": {
+                "default": "The word and, when inert, its buttons."
+            },
+            "events": {}
+        },
+        "UiDockDialog": {
+            "purpose": "A question over the page and the softphone's bar, Click's CallMethodDialog: a title, its hint and the answers in a column.",
+            "when": "A choice the dock asks before it acts: how to call a number. Escape and a click on the shade cancel; the focus starts on the control marked `data-autofocus`.",
+            "props": {
+                "title": "The question's subject, such as the number.",
+                "hint": "The line under it.",
+                "label": "Names the dialog for a screen reader."
+            },
+            "slots": {
+                "default": "The answers: wide UiDockButton."
+            },
+            "events": {
+                "cancel": "On Escape or a click on the shade."
+            }
+        },
+        "UiDockFab": {
+            "purpose": "The collapsed softphone, Click's `.voice-dock-fab`: a round button at the right edge with the call's timer or an icon and the status point at its corner.",
+            "when": "In the `fab` slot of UiDock. It moves by the pointer and the arrow keys and snaps to the right edge, anchored to the nearer vertical edge; the host keeps the anchor (`parseFabAnchor`, `serializeFabAnchor`).",
+            "props": {
+                "anchor": "Where it stands: an edge and the offset from it; null is the default corner.",
+                "tone": "Its colour: in an error, in a call, in the wrap-up; `wait` and `call` breathe.",
+                "dot": "The status point, as on UiDockChip.",
+                "label": "Its name and tooltip.",
+                "hint": "A note beside it, shown while given."
+            },
+            "slots": {
+                "default": "The timer (UiDockText `fab`) or an icon."
+            },
+            "events": {
+                "expand": "On a click that was not a drag.",
+                "move": "With the new anchor, after a drag or an arrow key.",
+                "grab": "When a drag starts."
+            }
+        },
+        "UiDockInput": {
+            "purpose": "The number field of the softphone, Click's `.quick-input` on the bar or, `wide`, its `.dial-input` across a panel.",
+            "when": "Where the agent types a number to call. Enter dials.",
+            "props": {
+                "modelValue": "The number; bind with v-model.",
+                "placeholder": "The hint in the empty field.",
+                "label": "Names the field for a screen reader.",
+                "wide": "Across a white panel instead of on the dark bar.",
+                "disabled": "Shown, not editable."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "On every keystroke.",
+                "enter": "On Enter.",
+                "focus": "When the field takes the focus."
+            }
+        },
+        "UiDockText": {
+            "purpose": "A word on the dock or in its panel, in one of its kinds.",
+            "when": "`caller` who the call is with, `error` what failed, `timer` the length of the call, `empty` a list with nothing in it yet, `meta` the small grey line beside a row, `fab` the timer on the collapsed button.",
+            "props": {
+                "kind": "Which word it is."
+            },
+            "slots": {
+                "default": "The word."
+            },
+            "events": {}
+        },
+        "UiDockSpacer": {
+            "purpose": "Between the dock's groups: a thin line or the room that pushes what follows to the right.",
+            "when": "On the bar, between groups of chips and buttons.",
+            "props": {
+                "kind": "`sep` a thin line, `grow` the room."
+            },
+            "slots": {},
+            "events": {}
+        },
+        "UiDockPlainButton": {
+            "purpose": "A bare icon button of the softphone, Click's `.plain`: no background or border, the colour of the text around it.",
+            "when": "A small action in a panel's title or on the bar: settings, collapse, close.",
+            "props": {
+                "label": "Names the button; it is its tooltip too."
+            },
+            "slots": {
+                "default": "The icon."
+            },
+            "events": {}
+        },
+        "UiDockTicker": {
+            "purpose": "Click's live transcript line above the softphone's bar: who said the last line and the line, cut to one row.",
+            "when": "In the `ticker` slot of UiDock while a call is transcribed.",
+            "props": {
+                "who": "Who said it.",
+                "text": "The last line.",
+                "live": "The mark that the transcript is coming; null hides it."
+            },
+            "slots": {},
+            "events": {}
+        },
+        "UiDockPanel": {
+            "purpose": "A white card over the dock's right end, Click's `.voice-dock-panel`: a title, its buttons and a cross, then the content.",
+            "when": "In the `panel` slot of UiDock: the history, the colleagues, the queues, the transfer, the keypad.",
+            "props": {
+                "title": "The title, which names the panel too.",
+                "closeLabel": "Names the cross.",
+                "narrow": "The keypad's width."
+            },
+            "slots": {
+                "default": "The content.",
+                "actions": "Buttons beside the cross."
+            },
+            "events": {
+                "close": "On the cross."
+            }
+        },
+        "UiDockTabs": {
+            "purpose": "The tabs of the softphone's panel, Click's `.panel-tabs`: one segmented row.",
+            "when": "Over the lists of a panel. A tab's `badge` above zero shows beside its label in amber (the calls waiting in the agent's queues).",
+            "props": {
+                "tabs": "The tabs in order, each with an optional `badge`.",
+                "modelValue": "The value of the active tab; bind with v-model."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "When another tab is picked."
+            }
+        },
+        "UiDockRow": {
+            "purpose": "A line of the softphone's history, Click's `.vd-row`: the direction's icon in its colour, who, when, and the round green button that calls back.",
+            "when": "In the history list of a panel.",
+            "props": {
+                "icon": "The direction's icon: a name of UiIcon.",
+                "tone": "Its colour: `out`, `in`, `internal` or `missed`.",
+                "label": "Who.",
+                "meta": "When.",
+                "actionLabel": "Names the call-back button."
+            },
+            "slots": {},
+            "events": {
+                "action": "On the call-back button."
+            }
+        },
+        "UiDockPerson": {
+            "purpose": "A colleague in the softphone's panel: the point that says whether their softphone is there, the name, the extension and status, and the button that calls them.",
+            "when": "In the colleagues list of a panel.",
+            "props": {
+                "online": "Their softphone is there: a green point.",
+                "label": "The name.",
+                "meta": "The extension and status.",
+                "actionLabel": "Names the call button.",
+                "disabled": "Greys the call button out when they cannot take the call."
+            },
+            "slots": {},
+            "events": {
+                "action": "On the call button."
+            }
+        },
+        "UiDockLine": {
+            "purpose": "A line of the softphone's panel, Click's `.vd-row` of the Queues tab: a point, the label, the small grey meta and the line's action.",
+            "when": "A list in a panel that is neither the history nor the colleagues: the agent's queues.",
+            "props": {
+                "label": "The line's name.",
+                "dot": "The point: `ok` or `off`; none without it.",
+                "meta": "The small grey word beside it."
+            },
+            "slots": {
+                "default": "The line's action."
+            },
+            "events": {}
+        },
+        "UiDockTarget": {
+            "purpose": "A colleague the call can go to, Click's `.vd-row` of the Transfer panel: the green point, the name, and the buttons.",
+            "when": "In the transfer panel, one line per colleague who can take the call.",
+            "props": {
+                "label": "The name."
+            },
+            "slots": {
+                "default": "The buttons that send the call or add them to it."
+            },
+            "events": {}
+        },
+        "UiDockStatus": {
+            "purpose": "How an action of the softphone goes, Click's `.transfer-status`: a turning circle, a tick or a warning, read out as it changes.",
+            "when": "Under the panel that started the action: a transfer, a participant added.",
+            "props": {
+                "state": "`waits`, `done` or `failed`."
+            },
+            "slots": {
+                "default": "What happens."
+            },
+            "events": {}
+        },
+        "UiDockSettings": {
+            "purpose": "The softphone's settings under the panel's title, Click's `.audio-settings`: a bordered column of fields and buttons.",
+            "when": "The devices and the like, opened from a button of the panel's title.",
+            "props": {
+                "label": "Names the section."
+            },
+            "slots": {
+                "default": "The fields.",
+                "footer": "Under a dashed line: a reset."
+            },
+            "events": {}
+        },
+        "UiDockSelect": {
+            "purpose": "A choice in the softphone's settings: the label above a full-width native select.",
+            "when": "In UiDockSettings: the microphone, the speaker.",
+            "props": {
+                "modelValue": "The chosen value; bind with v-model.",
+                "label": "The word above.",
+                "options": "The options in their order.",
+                "placeholder": "A disabled first option, chosen while the value is empty."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "When another option is chosen.",
+                "focus": "When the choice is about to be made."
+            }
+        },
+        "UiDockTextarea": {
+            "purpose": "A few lines of text in a panel of the softphone, Click's `.note-area`.",
+            "when": "The call's note.",
+            "props": {
+                "modelValue": "The text; bind with v-model.",
+                "placeholder": "The hint in the empty field.",
+                "label": "Names the field for a screen reader.",
+                "rows": "The visible lines.",
+                "maxlength": "The longest text it takes."
+            },
+            "slots": {},
+            "events": {
+                "update_modelValue": "On every keystroke."
+            }
+        },
+        "UiDialpad": {
+            "purpose": "The phone's twelve keys, Click's DIALPAD.",
+            "when": "In a panel of the softphone: to type a number, or to send tones during a call. `letters` prints the letters under the digits.",
+            "props": {
+                "letters": "Prints the letters under the digits."
+            },
+            "slots": {},
+            "events": {
+                "press": "With the key: a digit, `*` or `#`."
+            }
         }
     },
     "samples": {
@@ -1320,6 +1607,34 @@
         "language": "Language",
         "login_title": "Sign in",
         "login_lead": "Use the email and password of your account.",
-        "login_help": "Forgot the password?"
+        "login_help": "Forgot the password?",
+        "dock_title": "Softphone",
+        "dock_available": "Available",
+        "dock_number": "Number",
+        "dock_call": "Call",
+        "dock_collapse": "Collapse",
+        "dock_expand": "Expand the softphone",
+        "dock_close": "Close",
+        "dock_settings": "Settings",
+        "dock_microphone": "Microphone",
+        "dock_choose": "Choose…",
+        "dock_default_device": "The system's default",
+        "dock_customer": "Customer",
+        "dock_ticker_line": "I'd like to move the delivery to Friday.",
+        "dock_live": "LIVE",
+        "dock_history": "History",
+        "dock_colleagues": "Colleagues",
+        "dock_queues": "Queues",
+        "dock_call_back": "Call back",
+        "dock_note": "A note on the call",
+        "dock_transfer": "Transfer",
+        "dock_transferred": "The call went to Alex Poe.",
+        "dock_waiting": ":count waiting",
+        "dock_off": "Off",
+        "dock_call_method": "How to call",
+        "dock_how_to_call": "Call from the browser or from your phone?",
+        "dock_call_here": "From the browser",
+        "dock_call_phone": "From my phone",
+        "dock_pressed": "Pressed"
     }
 }

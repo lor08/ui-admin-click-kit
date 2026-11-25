@@ -15,9 +15,11 @@ import UiChipDemo from './demos/UiChipDemo.vue';
 import UiCodeBlockDemo from './demos/UiCodeBlockDemo.vue';
 import UiConfirmDialogDemo from './demos/UiConfirmDialogDemo.vue';
 import UiDescriptionListDemo from './demos/UiDescriptionListDemo.vue';
+import UiDialpadDemo from './demos/UiDialpadDemo.vue';
 import UiDisclosureDemo from './demos/UiDisclosureDemo.vue';
 import UiCopyFieldDemo from './demos/UiCopyFieldDemo.vue';
 import UiDividerDemo from './demos/UiDividerDemo.vue';
+import UiDockDemo from './demos/UiDockDemo.vue';
 import UiDrawerDemo from './demos/UiDrawerDemo.vue';
 import UiDropdownDemo from './demos/UiDropdownDemo.vue';
 import UiEmptyStateDemo from './demos/UiEmptyStateDemo.vue';
@@ -131,4 +133,6 @@ export const demos: Record<string, Component> = {
     UiAppShell: UiAppShellDemo,
     UiAuthFrame: UiAuthFrameDemo,
     UiIcon: UiIconDemo,
+    UiDock: UiDockDemo,
+    UiDialpad: UiDialpadDemo,
 };

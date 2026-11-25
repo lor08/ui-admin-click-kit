@@ -34,7 +34,8 @@ The kit expects these in the host (peer dependencies):
 `@types/google.maps` comes with the kit, so a host type-checks the map
 components without installing anything for them. The kit never imports
 the Maps loader itself: a host that uses maps passes the loader module in
-(see below), and a host that does not never needs it.
+(see below), and a host that does not never needs it. `@mdi/js` comes
+with the kit too: `UiIcon` draws the softphone's icons from its SVG paths.
 
 ## What a host gives the kit
 
@@ -127,8 +128,8 @@ In the host's main stylesheet, after Tailwind:
 ```
 
 `theme.css` holds the tokens every component draws with (`brand-*`,
-`canvas`, `surface`, `ink`, `line`, the tones, the sidebar, the radii and
-the animations). The `@source` path is relative to the stylesheet; it lets
+`canvas`, `surface`, `ink`, `line`, the tones, the sidebar, the
+softphone's dock (`dock-*`), the radii and the animations). The `@source` path is relative to the stylesheet; it lets
 Tailwind find the classes the kit uses. A brand change is an edit of the
 tokens in the host, after the import.
 

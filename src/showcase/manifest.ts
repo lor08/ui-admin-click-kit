@@ -928,6 +928,238 @@ toast.push({ tone: 'info', title: t('imports.started'), timeout: 0 });`,
         events: [],
         snippet: `<UiIcon name="phone-incoming" />`,
     },
+    {
+        name: 'UiDock',
+        group: 'softphone',
+        props: [{ name: 'inline', type: 'boolean', default: 'false' }, { name: 'collapsed', type: 'boolean', default: 'false' }],
+        slots: ['default', 'panel', 'ticker', 'fab'],
+        events: [],
+        snippet: `<UiAppShell :brand="t('app.name')">
+    …
+    <template #dock>
+        <UiDock :collapsed="collapsed">
+            <UiDockChip dot="ok">{{ t('softphone.available') }}</UiDockChip>
+            <UiDockInput v-model="number" :placeholder="t('softphone.number')" :label="t('softphone.number')" @enter="dial" />
+            <UiDockButton variant="green" round :label="t('softphone.call')" @click="dial"><UiIcon name="phone" /></UiDockButton>
+            <UiDockSpacer kind="grow" />
+            <UiDockPlainButton :label="t('softphone.collapse')" @click="collapsed = true"><UiIcon name="minus" /></UiDockPlainButton>
+            <template #panel><UiDockPanel v-if="panel" :title="t('softphone.history')" :close-label="t('softphone.close')" @close="panel = false">…</UiDockPanel></template>
+            <template #fab><UiDockFab :anchor="anchor" tone="ok" dot="ok" :label="t('softphone.expand')" @expand="collapsed = false" @move="anchor = $event"><UiIcon name="phone" /></UiDockFab></template>
+        </UiDock>
+    </template>
+</UiAppShell>`,
+    },
+    {
+        name: 'UiDockButton',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [
+            { name: 'variant', type: "'ghost' | 'green' | 'red' | 'light'", default: "'ghost'" },
+            { name: 'label', type: 'string', default: 'undefined' },
+            { name: 'round', type: 'boolean', default: 'false' },
+            { name: 'active', type: 'boolean', default: 'false' },
+            { name: 'pulse', type: 'boolean', default: 'false' },
+            { name: 'wide', type: 'boolean', default: 'false' },
+            { name: 'small', type: 'boolean', default: 'false' },
+            { name: 'disabled', type: 'boolean', default: 'false' },
+            { name: 'href', type: 'string', default: 'undefined' },
+        ],
+        slots: ['default'],
+        events: [],
+        snippet: `<UiDockButton variant="green" round pulse @click="answer"><UiIcon name="phone" /> {{ t('softphone.answer') }}</UiDockButton>`,
+    },
+    {
+        name: 'UiDockChip',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [
+            { name: 'dot', type: 'DockDot', default: 'undefined' },
+            { name: 'tone', type: "'default' | 'miss' | 'line' | 'sudo'", default: "'default'" },
+            { name: 'label', type: 'string', default: 'undefined' },
+            { name: 'inert', type: 'boolean', default: 'false' },
+        ],
+        slots: ['default'],
+        events: [],
+        snippet: `<UiDockChip dot="ok" :label="t('softphone.status')" @click="openStatus">{{ t('softphone.available') }}</UiDockChip>`,
+    },
+    {
+        name: 'UiDockDialog',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'title', type: 'string' }, { name: 'hint', type: 'string' }, { name: 'label', type: 'string' }],
+        slots: ['default'],
+        events: ['cancel'],
+        snippet: `<UiDockDialog v-if="asking" :title="number" :hint="t('softphone.how_to_call')" :label="t('softphone.call_method')" @cancel="asking = false">
+    <UiDockButton variant="green" wide data-autofocus @click="callHere">{{ t('softphone.call_here') }}</UiDockButton>
+    <UiDockButton variant="light" wide :href="\`tel:\${number}\`">{{ t('softphone.call_phone') }}</UiDockButton>
+</UiDockDialog>`,
+    },
+    {
+        name: 'UiDockFab',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [
+            { name: 'anchor', type: 'FabAnchor | null' },
+            { name: 'tone', type: "'ok' | 'dnd' | 'wait' | 'call' | 'wrap' | 'err' | 'off'" },
+            { name: 'dot', type: 'DockDot' },
+            { name: 'label', type: 'string' },
+            { name: 'hint', type: 'string | null', default: 'null' },
+        ],
+        slots: ['default'],
+        events: ['expand', 'move', 'grab'],
+        snippet: `<UiDockFab :anchor="anchor" tone="call" dot="ok" :label="t('softphone.expand')" @expand="collapsed = false" @move="(next) => (anchor = next)">
+    <UiDockText kind="fab">{{ timer }}</UiDockText>
+</UiDockFab>`,
+    },
+    {
+        name: 'UiDockInput',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'modelValue', type: 'string' }, { name: 'placeholder', type: 'string' }, { name: 'label', type: 'string' }, { name: 'wide', type: 'boolean', default: 'false' }, { name: 'disabled', type: 'boolean', default: 'false' }],
+        slots: [],
+        events: ['update:modelValue', 'enter', 'focus'],
+        snippet: `<UiDockInput v-model="number" :placeholder="t('softphone.number')" :label="t('softphone.number')" @enter="dial" />`,
+    },
+    {
+        name: 'UiDockText',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'kind', type: "'caller' | 'error' | 'timer' | 'empty' | 'meta' | 'fab'", default: "'caller'" }],
+        slots: ['default'],
+        events: [],
+        snippet: `<UiDockText kind="timer">{{ timer }}</UiDockText>`,
+    },
+    {
+        name: 'UiDockSpacer',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'kind', type: "'sep' | 'grow'", default: "'sep'" }],
+        slots: [],
+        events: [],
+        snippet: `<UiDockSpacer kind="grow" />`,
+    },
+    {
+        name: 'UiDockPlainButton',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'label', type: 'string' }],
+        slots: ['default'],
+        events: [],
+        snippet: `<UiDockPlainButton :label="t('softphone.settings')" @click="toggleSettings"><UiIcon name="cog-outline" /></UiDockPlainButton>`,
+    },
+    {
+        name: 'UiDockTicker',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'who', type: 'string' }, { name: 'text', type: 'string' }, { name: 'live', type: 'string | null' }],
+        slots: [],
+        events: [],
+        snippet: `<template #ticker><UiDockTicker :who="t('softphone.customer')" :text="lastLine" :live="t('softphone.live')" /></template>`,
+    },
+    {
+        name: 'UiDockPanel',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'title', type: 'string' }, { name: 'closeLabel', type: 'string' }, { name: 'narrow', type: 'boolean', default: 'false' }],
+        slots: ['default', 'actions'],
+        events: ['close'],
+        snippet: `<UiDockPanel :title="t('softphone.title')" :close-label="t('softphone.close')" @close="panel = null">
+    <template #actions><UiDockPlainButton :label="t('softphone.settings')"><UiIcon name="cog-outline" /></UiDockPlainButton></template>
+    …
+</UiDockPanel>`,
+    },
+    {
+        name: 'UiDockTabs',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'tabs', type: '{ value: string; label: string; badge?: number }[]' }, { name: 'modelValue', type: 'string' }],
+        slots: [],
+        events: ['update:modelValue'],
+        snippet: `<UiDockTabs v-model="tab" :tabs="[{ value: 'history', label: t('softphone.history') }, { value: 'queues', label: t('softphone.queues'), badge: waiting }]" />`,
+    },
+    {
+        name: 'UiDockRow',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'icon', type: 'IconName' }, { name: 'tone', type: "'out' | 'in' | 'internal' | 'missed'" }, { name: 'label', type: 'string' }, { name: 'meta', type: 'string' }, { name: 'actionLabel', type: 'string' }],
+        slots: [],
+        events: ['action'],
+        snippet: `<UiDockRow icon="phone-missed" tone="missed" :label="call.number" :meta="call.time" :action-label="t('softphone.call_back')" @action="dial(call.number)" />`,
+    },
+    {
+        name: 'UiDockPerson',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'online', type: 'boolean' }, { name: 'label', type: 'string' }, { name: 'meta', type: 'string' }, { name: 'actionLabel', type: 'string' }, { name: 'disabled', type: 'boolean', default: 'false' }],
+        slots: [],
+        events: ['action'],
+        snippet: `<UiDockPerson :online="person.online" :label="person.name" :meta="person.extension" :action-label="t('softphone.call')" :disabled="!person.online" @action="callColleague(person)" />`,
+    },
+    {
+        name: 'UiDockLine',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'label', type: 'string' }, { name: 'dot', type: "'ok' | 'off'", default: 'undefined' }, { name: 'meta', type: 'string', default: 'undefined' }],
+        slots: ['default'],
+        events: [],
+        snippet: `<UiDockLine :label="queue.name" :dot="queue.on ? 'ok' : 'off'" :meta="t('softphone.waiting', { count: queue.waiting })"><UiDockButton variant="light" small @click="toggle(queue)">{{ queue.on ? t('softphone.off') : t('softphone.on') }}</UiDockButton></UiDockLine>`,
+    },
+    {
+        name: 'UiDockTarget',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'label', type: 'string' }],
+        slots: ['default'],
+        events: [],
+        snippet: `<UiDockTarget :label="person.name"><UiDockButton variant="light" small @click="transfer(person)">{{ t('softphone.transfer') }}</UiDockButton></UiDockTarget>`,
+    },
+    {
+        name: 'UiDockStatus',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'state', type: "'waits' | 'done' | 'failed'" }],
+        slots: ['default'],
+        events: [],
+        snippet: `<UiDockStatus state="waits">{{ t('softphone.transferring') }}</UiDockStatus>`,
+    },
+    {
+        name: 'UiDockSettings',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'label', type: 'string' }],
+        slots: ['default', 'footer'],
+        events: [],
+        snippet: `<UiDockSettings :label="t('softphone.settings')">
+    <UiDockSelect v-model="microphone" :label="t('softphone.microphone')" :options="microphones" />
+    <template #footer><UiDockButton variant="light" small @click="resetFab">{{ t('softphone.reset_button') }}</UiDockButton></template>
+</UiDockSettings>`,
+    },
+    {
+        name: 'UiDockSelect',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'modelValue', type: 'string' }, { name: 'label', type: 'string' }, { name: 'options', type: '{ value: string; label: string }[]' }, { name: 'placeholder', type: 'string', default: 'undefined' }],
+        slots: [],
+        events: ['update:modelValue', 'focus'],
+        snippet: `<UiDockSelect v-model="microphone" :label="t('softphone.microphone')" :options="microphones" :placeholder="t('softphone.choose')" @focus="readDevices" />`,
+    },
+    {
+        name: 'UiDockTextarea',
+        group: 'softphone',
+        partOf: 'UiDock',
+        props: [{ name: 'modelValue', type: 'string' }, { name: 'placeholder', type: 'string' }, { name: 'label', type: 'string' }, { name: 'rows', type: 'number', default: '3' }, { name: 'maxlength', type: 'number', default: 'undefined' }],
+        slots: [],
+        events: ['update:modelValue'],
+        snippet: `<UiDockTextarea v-model="note" :placeholder="t('softphone.note')" :label="t('softphone.note')" :maxlength="1000" />`,
+    },
+    {
+        name: 'UiDialpad',
+        group: 'softphone',
+        props: [{ name: 'letters', type: 'boolean', default: 'false' }],
+        slots: [],
+        events: ['press'],
+        snippet: `<UiDialpad letters @press="(digit) => (number += digit)" />`,
+    },
 ];
 
 /** The entries of one group, in the order of the manifest. */

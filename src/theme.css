@@ -91,4 +91,33 @@
             background-color: var(--color-surface);
         }
     }
+
+    /* The softphone's dock (UiDock*), Click's VoiceDockBar: a dark bar at the bottom of the page. */
+    --color-dock: #1e2a3a;
+    --color-dock-ink: #e6ebf2;
+    --color-dock-muted: #9aa8bb;
+    --color-dock-ok: #34d399;
+    --color-dock-wait: #fbbf24;
+    --color-dock-err: #f87171;
+    --color-dock-off: #64748b;
+    --color-dock-call: #16a34a;
+    --color-dock-hangup: #dc2626;
+    --color-dock-active: #2f81f7;
+    --color-dock-timer: #a7f3d0;
+    --color-dock-miss: #fca5a5;
+    --color-dock-tab: #1d4ed8;
+    /* The collapsed softphone's button (UiDockFab), Click's .voice-dock-fab: in an error, in a call, in the wrap-up; its hint. */
+    --color-dock-fab-err: #7f1d1d;
+    --color-dock-fab-call: #14532d;
+    --color-dock-fab-wrap: #78350f;
+    --color-dock-hint: #0f172a;
+
+    /* The Answer button of an incoming call breathes, as in Click's dock. */
+    --animate-dock-pulse: dock-pulse 1.2s infinite;
+
+    @keyframes dock-pulse {
+        50% {
+            box-shadow: 0 0 0 6px rgb(22 163 74 / 0.25);
+        }
+    }
 }
