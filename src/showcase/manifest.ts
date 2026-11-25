@@ -1160,6 +1160,14 @@ toast.push({ tone: 'info', title: t('imports.started'), timeout: 0 });`,
         events: ['press'],
         snippet: `<UiDialpad letters @press="(digit) => (number += digit)" />`,
     },
+    {
+        name: 'UiPhoneLink',
+        group: 'softphone',
+        props: [{ name: 'href', type: 'string' }, { name: 'title', type: 'string', default: 'undefined' }],
+        slots: ['default'],
+        events: ['click'],
+        snippet: `<UiPhoneLink :href="\`tel:\${call.from}\`" :title="t('softphone.call')" @click="(event) => softphoneReady && (event.preventDefault(), dial(call.from))">{{ call.fromLabel }}</UiPhoneLink>`,
+    },
 ];
 
 /** The entries of one group, in the order of the manifest. */

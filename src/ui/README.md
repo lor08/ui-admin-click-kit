@@ -144,6 +144,7 @@ The parts of a softphone in the manner of Click's dock: the dark bar along the b
 | `UiDockSelect` (with `UiDock`) | A choice in the softphone's settings: the label above a full-width native select. | In UiDockSettings: the microphone, the speaker. |
 | `UiDockTextarea` (with `UiDock`) | A few lines of text in a panel of the softphone, Click's `.note-area`. | The call's note. |
 | `UiDialpad` | The phone's twelve keys, Click's DIALPAD. | In a panel of the softphone: to type a number, or to send tones during a call. `letters` prints the letters under the digits. |
+| `UiPhoneLink` | A phone number one can call, Click's `.phone-link`: a `tel:` link with a dashed underline. | Wherever a screen shows a number the agent may call. The page decides on `click` whether the browser follows the link or the softphone dials (`preventDefault`); the click and Enter stay on the link, so a row that opens on them does not. |
 
 ## Words
 

@@ -47,6 +47,7 @@ import UiMultiSelectDemo from './demos/UiMultiSelectDemo.vue';
 import UiPageHeaderDemo from './demos/UiPageHeaderDemo.vue';
 import UiPaginationDemo from './demos/UiPaginationDemo.vue';
 import UiPasswordInputDemo from './demos/UiPasswordInputDemo.vue';
+import UiPhoneLinkDemo from './demos/UiPhoneLinkDemo.vue';
 import UiRadioGroupDemo from './demos/UiRadioGroupDemo.vue';
 import UiSearchInputDemo from './demos/UiSearchInputDemo.vue';
 import UiSelectDemo from './demos/UiSelectDemo.vue';
@@ -135,4 +136,5 @@ export const demos: Record<string, Component> = {
     UiIcon: UiIconDemo,
     UiDock: UiDockDemo,
     UiDialpad: UiDialpadDemo,
+    UiPhoneLink: UiPhoneLinkDemo,
 };

@@ -71,6 +71,7 @@ export { default as UiNavItem } from './UiNavItem.vue';
 export { default as UiPageHeader } from './UiPageHeader.vue';
 export { default as UiPagination } from './UiPagination.vue';
 export { default as UiPasswordInput } from './UiPasswordInput.vue';
+export { default as UiPhoneLink } from './UiPhoneLink.vue';
 export { default as UiPlaceInput } from './UiPlaceInput.vue';
 export { default as UiRadioGroup } from './UiRadioGroup.vue';
 export { default as UiRichText } from './UiRichText.vue';

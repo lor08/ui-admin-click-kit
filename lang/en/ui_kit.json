@@ -1404,6 +1404,20 @@
             "events": {
                 "press": "With the key: a digit, `*` or `#`."
             }
+        },
+        "UiPhoneLink": {
+            "purpose": "A phone number one can call, Click's `.phone-link`: a `tel:` link with a dashed underline.",
+            "when": "Wherever a screen shows a number the agent may call. The page decides on `click` whether the browser follows the link or the softphone dials (`preventDefault`); the click and Enter stay on the link, so a row that opens on them does not.",
+            "props": {
+                "href": "The `tel:` address.",
+                "title": "The tooltip."
+            },
+            "slots": {
+                "default": "The number as it reads."
+            },
+            "events": {
+                "click": "With the event, before the browser follows the link."
+            }
         }
     },
     "samples": {
@@ -1635,6 +1649,7 @@
         "dock_how_to_call": "Call from the browser or from your phone?",
         "dock_call_here": "From the browser",
         "dock_call_phone": "From my phone",
-        "dock_pressed": "Pressed"
+        "dock_pressed": "Pressed",
+        "phone_link_caller": "The caller:"
     }
 }
