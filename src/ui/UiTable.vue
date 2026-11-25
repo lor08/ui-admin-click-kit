@@ -11,6 +11,10 @@ export interface UiTableColumn {
     sortable?: boolean;
     align?: 'left' | 'right' | 'center';
     class?: string;
+    /** The column of row actions: as narrow as its content and pinned to the right edge while a wide table scrolls, so it stays in reach on a phone. */
+    pinEnd?: boolean;
+    /** The header is there for screen readers only (a column of buttons whose own labels say what they do). */
+    hideLabel?: boolean;
 }
 
 export interface UiTableSort {
@@ -119,6 +123,10 @@ const padding = computed(() => (props.dense ? 'px-3 py-1.5' : 'px-4 py-2.5'));
 /** The first column of a stickyFirst table: pinned to the left edge, on its own background so the scrolled cells pass under it. */
 const pinned = (index: number, head: boolean): string => (props.stickyFirst && index === 0 ? `sticky left-0 z-10 ${head ? 'bg-canvas' : 'bg-surface'} shadow-[1px_0_0_var(--color-line)]` : '');
 
+/** A pinEnd column: on the row's own background (it inherits the row's tint and hover), with a line on its left edge. */
+const pinnedEnd = (column: UiTableColumn, head: boolean): string =>
+    column.pinEnd ? `sticky right-0 z-10 w-px whitespace-nowrap ${head ? 'bg-canvas' : 'bg-inherit'} shadow-[-1px_0_0_var(--color-line)]` : '';
+
 const tints: Record<Tone, string> = {
     neutral: 'bg-canvas hover:bg-surface-muted',
     brand: 'bg-brand-50 hover:bg-brand-100',
@@ -133,7 +141,7 @@ function rowClasses(row: T): string[] {
     const tone = props.rowTone?.(row) ?? null;
     const muted = props.mutedRow?.(row) ?? false;
     const pulse = props.pulseRow?.(row) ?? false;
-    const background = pulse ? 'bg-danger-surface motion-safe:animate-row-pulse' : tone ? tints[tone] : muted ? 'bg-surface-muted hover:bg-canvas' : 'hover:bg-canvas';
+    const background = pulse ? 'bg-danger-surface motion-safe:animate-row-pulse' : tone ? tints[tone] : muted ? 'bg-surface-muted hover:bg-canvas' : 'bg-surface hover:bg-canvas';
 
     return [background, props.clickable ? 'cursor-pointer' : '', muted ? 'text-ink-muted [&_td]:text-ink-muted' : ''];
 }
@@ -148,7 +156,7 @@ function rowClasses(row: T): string[] {
                         v-for="(column, index) in props.columns"
                         :key="column.key"
                         scope="col"
-                        :class="[padding, aligns[column.align ?? 'left'], column.class, pinned(index, true)]"
+                        :class="[padding, aligns[column.align ?? 'left'], column.class, pinned(index, true), pinnedEnd(column, true)]"
                         :aria-sort="ariaSort(column)"
                     >
                         <button
@@ -165,6 +173,7 @@ function rowClasses(row: T): string[] {
                             <ArrowDown v-else-if="activeSort?.key === column.key" class="h-3.5 w-3.5" aria-hidden="true" />
                             <ArrowUpDown v-else class="h-3.5 w-3.5 opacity-50" aria-hidden="true" />
                         </button>
+                        <span v-else-if="column.hideLabel" class="sr-only">{{ column.label }}</span>
                         <slot v-else :name="`header-${column.key}`" :column="column">{{ column.label }}</slot>
                     </th>
                 </tr>
@@ -192,7 +201,7 @@ function rowClasses(row: T): string[] {
                     @click="props.clickable && emit('row-click', row)"
                     @keydown.enter="props.clickable && emit('row-click', row)"
                 >
-                    <td v-for="(column, index) in props.columns" :key="column.key" class="align-top text-ink" :class="[padding, aligns[column.align ?? 'left'], column.class, pinned(index, false)]">
+                    <td v-for="(column, index) in props.columns" :key="column.key" class="align-top text-ink" :class="[padding, aligns[column.align ?? 'left'], column.class, pinned(index, false), pinnedEnd(column, false)]">
                         <slot :name="`cell-${column.key}`" :row="row">{{ cell(row, column.key) }}</slot>
                     </td>
                 </tr>

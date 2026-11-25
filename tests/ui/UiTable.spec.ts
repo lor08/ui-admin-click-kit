@@ -90,6 +90,23 @@ describe('UiTable', () => {
         expect(plain.get('tbody td').classes()).not.toContain('sticky');
     });
 
+    it('pins a narrow column of row actions to the right edge and can keep its header for screen readers only', () => {
+        const wrapper = mount(UiTable, {
+            props: { columns: [{ key: 'name', label: 'Name' }, { key: 'actions', label: 'Actions', pinEnd: true, hideLabel: true }], rows: [{ id: 1, name: 'Alex', actions: '' }], rowKey: 'id' },
+            slots: { 'cell-actions': '<button>Edit</button>' },
+        });
+        const [nameHead, actionsHead] = wrapper.findAll('thead th');
+        const [nameCell, actionsCell] = wrapper.findAll('tbody td');
+
+        expect(actionsHead?.classes()).toEqual(expect.arrayContaining(['sticky', 'right-0', 'w-px', 'bg-canvas']));
+        expect(actionsHead?.get('.sr-only').text()).toBe('Actions');
+        expect(actionsCell?.classes()).toEqual(expect.arrayContaining(['sticky', 'right-0', 'bg-inherit']));
+        expect(wrapper.get('tbody tr').classes()).toContain('bg-surface');
+        expect(nameHead?.classes()).not.toContain('sticky');
+        expect(nameHead?.find('.sr-only').exists()).toBe(false);
+        expect(nameCell?.classes()).not.toContain('sticky');
+    });
+
     it('says when there is nothing to show, in the page words or the kit default', () => {
         const wrapper = mount(UiTable, { props: { columns, rows: [], rowKey: 'id', empty: 'No users yet.' } });
 
