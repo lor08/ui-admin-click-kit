@@ -49,6 +49,7 @@ function focusFirstControl(event: Event): void {
                 class="fixed left-1/2 top-1/2 z-50 flex max-h-[calc(100vh-2rem)] w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col rounded-card border border-line bg-surface shadow-xl focus:outline-none"
                 :class="sizes[props.size]"
                 aria-modal="true"
+                v-bind="props.description ? {} : { 'aria-describedby': undefined }"
                 @open-auto-focus="focusFirstControl"
             >
                 <header class="flex items-start justify-between gap-4 px-6 pt-6">

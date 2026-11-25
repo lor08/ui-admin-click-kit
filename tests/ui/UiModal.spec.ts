@@ -21,6 +21,16 @@ describe('UiModal', () => {
         wrapper.unmount();
     });
 
+    it('says it has no description when it has none, so the dialog does not point at a missing one', async () => {
+        const wrapper = mount(UiModal, { props: { open: true, title: 'Rename' }, slots: { default: 'Body' }, attachTo: document.body });
+        await new Promise((resolve) => setTimeout(resolve, 0));
+
+        const describedBy = document.querySelector('[role="dialog"]')?.hasAttribute('aria-describedby');
+        wrapper.unmount();
+
+        expect(describedBy).toBe(false);
+    });
+
     it('asks to close on Escape and on the close button', async () => {
         const wrapper = mount(UiModal, { props: { open: true, title: 'T' }, attachTo: document.body });
         await new Promise((resolve) => setTimeout(resolve, 0));
