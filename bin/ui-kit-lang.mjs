@@ -10,7 +10,7 @@
  * exits 1 when a file is missing or differs, for a host's CI after a bump.
  * Plain JavaScript on purpose: Node does not strip types in node_modules.
  */
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -90,6 +90,9 @@ function main(argv) {
     return 0;
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+// npm runs the command through a symlink in node_modules/.bin, so the two
+// paths are compared after resolving links: comparing them as given made
+// `npx ui-kit-lang` do nothing and exit 0.
+if (process.argv[1] && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url))) {
     process.exitCode = main(process.argv.slice(2));
 }

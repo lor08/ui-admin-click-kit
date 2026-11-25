@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
@@ -43,6 +43,16 @@ describe('the words of the kit', () => {
 
         writeFileSync(join(dir, 'en', 'ui.php'), '<?php return [];');
         expect(() => execFileSync('node', [bin, dir, '--check'], { stdio: 'pipe' })).toThrow();
+    });
+
+    it('runs when it is started through a symlink, the way npm starts a bin', () => {
+        dir = mkdtempSync(join(tmpdir(), 'kit-lang-'));
+        const link = join(dir, 'ui-kit-lang');
+        symlinkSync(bin, link);
+        execFileSync('node', [link, join(dir, 'lang'), '--groups', 'ui']);
+
+        expect(parsePhpLang(readFileSync(join(dir, 'lang', 'en', 'ui.php'), 'utf8'))).toEqual(json('en', 'ui'));
+        expect(() => execFileSync('node', [link, join(dir, 'empty'), '--check'], { stdio: 'pipe' })).toThrow();
     });
 
     it('writes only the groups it is asked for', () => {
