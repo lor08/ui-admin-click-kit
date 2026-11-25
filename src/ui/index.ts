@@ -4,6 +4,9 @@
  * host's Vite compiles.
  */
 export { default as UiAlert } from './UiAlert.vue';
+export { default as UiAppShell } from './UiAppShell.vue';
+export { default as UiAudioPlayer } from './UiAudioPlayer.vue';
+export { default as UiAuthFrame } from './UiAuthFrame.vue';
 export { default as UiAvatar } from './UiAvatar.vue';
 export { default as UiBadge } from './UiBadge.vue';
 export { default as UiBarChart } from './UiBarChart.vue';
@@ -42,6 +45,7 @@ export { default as UiListItem } from './UiListItem.vue';
 export { default as UiMap } from './UiMap.vue';
 export { default as UiModal } from './UiModal.vue';
 export { default as UiMultiSelect } from './UiMultiSelect.vue';
+export { default as UiNavItem } from './UiNavItem.vue';
 export { default as UiPageHeader } from './UiPageHeader.vue';
 export { default as UiPagination } from './UiPagination.vue';
 export { default as UiPasswordInput } from './UiPasswordInput.vue';
@@ -51,6 +55,8 @@ export { default as UiRichText } from './UiRichText.vue';
 export { default as UiRichTextEditor } from './UiRichTextEditor.vue';
 export { default as UiSearchInput } from './UiSearchInput.vue';
 export { default as UiSelect } from './UiSelect.vue';
+export { default as UiSidebarIdentity } from './UiSidebarIdentity.vue';
+export { default as UiSidebarSelect } from './UiSidebarSelect.vue';
 export { default as UiSkeleton } from './UiSkeleton.vue';
 export { default as UiSpinner } from './UiSpinner.vue';
 export { default as UiStatCard } from './UiStatCard.vue';

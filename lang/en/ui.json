@@ -82,5 +82,9 @@
         "more": "+:count",
         "filter": "Filter the list",
         "none": "Nothing matches."
+    },
+    "shell": {
+        "nav": "Sections",
+        "open_menu": "Open the menu"
     }
 }
