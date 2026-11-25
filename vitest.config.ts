@@ -1,0 +1,15 @@
+import vue from '@vitejs/plugin-vue';
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+    plugins: [vue()],
+    test: {
+        environment: 'jsdom',
+        include: ['tests/**/*.spec.ts'],
+        setupFiles: ['tests/setup.ts'],
+        // A zone behind UTC catches dates built in local time instead of UTC.
+        env: {
+            TZ: 'America/Los_Angeles',
+        },
+    },
+});

@@ -1,0 +1,86 @@
+{
+    "close": "Close",
+    "clear": "Clear",
+    "loading": "Loading…",
+    "required": "required",
+    "optional": "optional",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "actions": "Actions",
+    "menu": "Menu",
+    "breadcrumbs": "You are here",
+    "dismiss": "Dismiss",
+    "search": "Search",
+    "empty": "Nothing here yet.",
+    "copy": {
+        "copy": "Copy",
+        "copied": "Copied.",
+        "failed": "The browser did not allow copying; select the text and copy it by hand."
+    },
+    "sort": {
+        "by": "Sort by :column",
+        "asc": "ascending",
+        "desc": "descending"
+    },
+    "pagination": {
+        "label": "Pages",
+        "previous": "Previous",
+        "next": "Next",
+        "page": "Page :page",
+        "of": ":from–:to of :total"
+    },
+    "filters": {
+        "apply": "Show",
+        "reset": "Reset"
+    },
+    "password": {
+        "show": "Show the password",
+        "hide": "Hide the password",
+        "strength": {
+            "label": "Password strength",
+            "weak": "Weak",
+            "medium": "Medium",
+            "strong": "Strong"
+        },
+        "checks": {
+            "length": "At least :min characters",
+            "upper": "An uppercase letter",
+            "lower": "A lowercase letter",
+            "digit": "A digit",
+            "special": "A special character"
+        }
+    },
+    "embed_frame": {
+        "loading": "Loading the page…",
+        "failed": "The page did not load. Try again."
+    },
+    "street_view": {
+        "panorama": "Street View of the address",
+        "map": "Map of the address",
+        "enlarge": "Open the picture larger",
+        "unit": "Unit: :unit"
+    },
+    "map": {
+        "label": "Map",
+        "loading": "Loading the map…",
+        "no_key": "The map is off",
+        "no_key_hint": "Set VITE_GOOGLE_MAPS_KEY in .env and build the assets again.",
+        "failed": "The map did not load",
+        "failed_hint": "Check the connection and the key, then reload the page."
+    },
+    "chart": {
+        "label": "Chart",
+        "summary": "Total :total over :rows bar: :parts.|Total :total over :rows bars: :parts.",
+        "category": "Item",
+        "total": "Total"
+    },
+    "code": {
+        "label": "Data"
+    },
+    "multi_select": {
+        "any": "Any",
+        "more": "+:count",
+        "filter": "Filter the list",
+        "none": "Nothing matches."
+    }
+}

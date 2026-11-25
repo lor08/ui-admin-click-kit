@@ -1,0 +1,62 @@
+{
+    "name": "ui-admin-click-kit",
+    "version": "0.1.0",
+    "description": "Vue 3 admin UI kit: Tailwind 4 components shipped as source, with a showcase catalogue.",
+    "type": "module",
+    "sideEffects": [
+        "*.css"
+    ],
+    "engines": {
+        "node": ">=24"
+    },
+    "exports": {
+        ".": "./src/ui/index.ts",
+        "./ui/*": "./src/ui/*",
+        "./showcase": "./src/showcase/index.ts",
+        "./showcase/*": "./src/showcase/*",
+        "./theme.css": "./src/theme.css",
+        "./lang/*": "./lang/*",
+        "./package.json": "./package.json"
+    },
+    "bin": {
+        "ui-kit-lang": "bin/ui-kit-lang.mjs"
+    },
+    "files": [
+        "src",
+        "lang",
+        "bin"
+    ],
+    "scripts": {
+        "typecheck": "vue-tsc --noEmit",
+        "test": "vitest run",
+        "ui:readme": "node scripts/ui-readme.ts",
+        "ui:readme:check": "node scripts/ui-readme.ts --check"
+    },
+    "peerDependencies": {
+        "@googlemaps/js-api-loader": "^2.1.3",
+        "lucide-vue-next": "^1.0.0",
+        "reka-ui": "^2.11.0",
+        "vue": "^3.5.42"
+    },
+    "peerDependenciesMeta": {
+        "@googlemaps/js-api-loader": {
+            "optional": true
+        }
+    },
+    "dependencies": {
+        "@types/google.maps": "3.58.1"
+    },
+    "devDependencies": {
+        "@types/node": "^26.4.1",
+        "@vitejs/plugin-vue": "^6.0.8",
+        "@vue/test-utils": "^2.5.0",
+        "jsdom": "^30.0.1",
+        "lucide-vue-next": "^1.0.0",
+        "reka-ui": "^2.11.0",
+        "typescript": "^5.9.3",
+        "vite": "^8.0.0",
+        "vitest": "^5.0.0",
+        "vue": "^3.5.42",
+        "vue-tsc": "^3.3.11"
+    }
+}
