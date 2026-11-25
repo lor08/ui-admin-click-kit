@@ -1379,6 +1379,16 @@
                 "focus": "When the choice is about to be made."
             }
         },
+        "UiDockMeter": {
+            "purpose": "A level in the softphone's settings: the label above a thin bar filled from 0 to 1, read out as a meter.",
+            "when": "In UiDockSettings: how loud the chosen microphone hears the agent.",
+            "props": {
+                "label": "Names the level.",
+                "value": "The level from 0 to 1; outside it is clamped."
+            },
+            "slots": {},
+            "events": {}
+        },
         "UiDockTextarea": {
             "purpose": "A few lines of text in a panel of the softphone, Click's `.note-area`.",
             "when": "The call's note.",
@@ -1631,6 +1641,7 @@
         "dock_close": "Close",
         "dock_settings": "Settings",
         "dock_microphone": "Microphone",
+        "dock_microphone_level": "Microphone level",
         "dock_choose": "Choose…",
         "dock_default_device": "The system's default",
         "dock_customer": "Customer",

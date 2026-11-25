@@ -6,6 +6,7 @@ import UiDockDialog from '../../ui/UiDockDialog.vue';
 import UiDockFab from '../../ui/UiDockFab.vue';
 import UiDockInput from '../../ui/UiDockInput.vue';
 import UiDockLine from '../../ui/UiDockLine.vue';
+import UiDockMeter from '../../ui/UiDockMeter.vue';
 import UiDockPanel from '../../ui/UiDockPanel.vue';
 import UiDockPerson from '../../ui/UiDockPerson.vue';
 import UiDockPlainButton from '../../ui/UiDockPlainButton.vue';
@@ -74,6 +75,7 @@ function call(): void {
                     </template>
                     <UiDockSettings v-if="settings" :label="t('ui_kit.samples.dock_settings')">
                         <UiDockSelect v-model="microphone" :label="t('ui_kit.samples.dock_microphone')" :options="microphones" :placeholder="t('ui_kit.samples.dock_choose')" />
+                        <UiDockMeter :label="t('ui_kit.samples.dock_microphone_level')" :value="0.42" />
                         <template #footer>
                             <UiDockButton variant="light" small @click="settings = false">{{ t('ui_kit.samples.dock_close') }}</UiDockButton>
                         </template>

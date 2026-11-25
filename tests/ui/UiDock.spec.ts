@@ -9,6 +9,7 @@ import UiDockDialog from '../../src/ui/UiDockDialog.vue';
 import UiDockFab from '../../src/ui/UiDockFab.vue';
 import UiDockInput from '../../src/ui/UiDockInput.vue';
 import UiDockPanel from '../../src/ui/UiDockPanel.vue';
+import UiDockMeter from '../../src/ui/UiDockMeter.vue';
 import UiDockPerson from '../../src/ui/UiDockPerson.vue';
 import UiDockRow from '../../src/ui/UiDockRow.vue';
 import UiDockSelect from '../../src/ui/UiDockSelect.vue';
@@ -108,6 +109,22 @@ describe('the dock’s controls', () => {
         expect(options[0]?.attributes('disabled')).toBeDefined();
         await wrapper.get('select').setValue('b');
         expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['b']);
+    });
+
+    it('UiDockMeter fills its bar to the level, clamped, and reads it out in whole percent', async () => {
+        const wrapper = mount(UiDockMeter, { props: { label: 'Microphone level', value: 0.426 } });
+        const meter = wrapper.get('[role="meter"]');
+
+        expect(wrapper.text()).toBe('Microphone level');
+        expect(meter.attributes('aria-label')).toBe('Microphone level');
+        expect(meter.attributes('aria-valuenow')).toBe('43');
+        expect((meter.element.firstElementChild as HTMLElement).style.width).toBe('43%');
+        await wrapper.setProps({ value: 1.7 });
+        expect(meter.attributes('aria-valuenow')).toBe('100');
+        await wrapper.setProps({ value: -0.2 });
+        expect((meter.element.firstElementChild as HTMLElement).style.width).toBe('0%');
+        await wrapper.setProps({ value: Number.NaN });
+        expect(meter.attributes('aria-valuenow')).toBe('0');
     });
 });
 

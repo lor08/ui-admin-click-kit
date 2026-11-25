@@ -32,6 +32,7 @@ export { default as UiDockDialog } from './UiDockDialog.vue';
 export { default as UiDockFab } from './UiDockFab.vue';
 export { default as UiDockInput } from './UiDockInput.vue';
 export { default as UiDockLine } from './UiDockLine.vue';
+export { default as UiDockMeter } from './UiDockMeter.vue';
 export { default as UiDockPanel } from './UiDockPanel.vue';
 export { default as UiDockPerson } from './UiDockPerson.vue';
 export { default as UiDockPlainButton } from './UiDockPlainButton.vue';
