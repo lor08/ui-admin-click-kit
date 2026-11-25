@@ -424,7 +424,9 @@
                 "mutedRow": "A function of the row: true draws it dimmed (blocked, archived).",
                 "rowTone": "A function of the row: a tone tints it (a running job green, a failed one red, a late one yellow), null leaves it plain. Write the state in a cell too: the tint is never the only sign. A muted row keeps the tint and dims its text.",
                 "pulseRow": "A function of the row: true makes it blink red, to flag a record that waits for someone and nobody has taken. For what waits for someone now, never for a plain state; with reduced motion it stays tinted. Write the state in a cell too.",
-                "stickyFirst": "The first column stays in place while a wide table scrolls sideways, so every row keeps its name: a dashboard of days with the metric on the left. Meant for tables without row tints, as the pinned cell has the plain background."
+                "stickyFirst": "The first column stays in place while a wide table scrolls sideways, so every row keeps its name: a dashboard of days with the metric on the left. Meant for tables without row tints, as the pinned cell has the plain background.",
+                "reorderable": "A handle before each row moves it: dragged by the pointer, or with the up and down arrows while it has the focus (the focus follows the row). The table emits `reorder` and the parent orders `rows` itself; for an order the reader sets by hand (the ring order of agents). Keep buttons of their own for a touch screen, where a drag does not start.",
+                "rowLabel": "A function of the row: its name in the handle's label for a screen reader (\"Move Anna\"); the row key without it."
             },
             "slots": {
                 "cell_key": "The cell of column `key`, with `row`.",
@@ -434,7 +436,8 @@
             },
             "events": {
                 "update_sort": "The order the reader asked for, when `sort` is bound.",
-                "row_click": "The row clicked or entered, when `clickable`."
+                "row_click": "The row clicked or entered, when `clickable`.",
+                "reorder": "The row at `from` should move to `to` (indexes in `rows`), when `reorderable`."
             }
         },
         "UiSearchInput": {

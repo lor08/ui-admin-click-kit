@@ -86,5 +86,9 @@
     "shell": {
         "nav": "Sections",
         "open_menu": "Open the menu"
+    },
+    "table": {
+        "order": "Order",
+        "move": "Move :row: drag, or press the up and down arrows"
     }
 }

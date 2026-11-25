@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils';
+import { flushPromises, mount } from '@vue/test-utils';
 import { describe, expect, it, vi } from 'vitest';
 import UiTable from '../../src/ui/UiTable.vue';
 
@@ -158,5 +158,66 @@ describe('UiTable', () => {
 
         expect(clickable.emitted('row-click')).toEqual([[rows[1]], [rows[0]]]);
         expect(clickable.findAll('tbody tr')[0]?.attributes('tabindex')).toBe('0');
+    });
+
+    it('moves a row by its handle: a drag that starts on the handle, or the arrow keys with the focus kept on the row moved', async () => {
+        const three = [...rows, { id: 3, name: 'Cleo', email: 'cleo@x.y', calls: 5 }];
+        const wrapper = mount(UiTable, {
+            props: {
+                columns: [{ key: 'name', label: 'Name' }],
+                rows: three,
+                rowKey: 'id',
+                reorderable: true,
+                rowLabel: (row: object) => (row as { name: string }).name,
+                onReorder: (from: number, to: number) => {
+                    const next = [...(wrapper.props('rows') as typeof three)];
+                    const [moved] = next.splice(from, 1);
+                    next.splice(to, 0, moved!);
+                    void wrapper.setProps({ rows: next });
+                },
+            },
+            attachTo: document.body,
+        });
+        const names = (): string[] => wrapper.findAll('tbody tr').map((tr) => tr.findAll('td')[1]?.text() ?? '');
+        const handles = () => wrapper.findAll('[data-test="reorder-handle"]');
+
+        expect(wrapper.findAll('th').map((th) => th.text())).toEqual(['Order', 'Name']);
+        expect(handles().map((handle) => handle.attributes('aria-label'))).toEqual([
+            'Move Bob: drag, or press the up and down arrows',
+            'Move Alex: drag, or press the up and down arrows',
+            'Move Cleo: drag, or press the up and down arrows',
+        ]);
+        const trs = wrapper.findAll('tbody tr');
+        expect(trs.map((tr) => tr.attributes('draggable'))).toEqual([undefined, undefined, undefined]);
+
+        // A drag that does not start on the handle is refused.
+        await trs[0]?.trigger('dragstart');
+        await trs[2]?.trigger('dragover');
+        await trs[2]?.trigger('drop');
+        expect(wrapper.emitted('reorder')).toBeUndefined();
+
+        await handles()[0]?.trigger('pointerdown');
+        expect(wrapper.findAll('tbody tr')[0]?.attributes('draggable')).toBe('true');
+        await wrapper.findAll('tbody tr')[0]?.trigger('dragstart');
+        await wrapper.findAll('tbody tr')[2]?.trigger('dragover');
+        expect(wrapper.findAll('tbody tr').map((tr) => [tr.attributes('data-dragged'), tr.attributes('data-drop')])).toEqual([
+            ['true', undefined],
+            [undefined, undefined],
+            [undefined, 'true'],
+        ]);
+        await wrapper.findAll('tbody tr')[2]?.trigger('drop');
+        expect(wrapper.emitted('reorder')).toEqual([[0, 2]]);
+        expect(names()).toEqual(['Alex', 'Cleo', 'Bob']);
+        expect(wrapper.findAll('tbody tr').map((tr) => tr.attributes('draggable') ?? tr.attributes('data-dragged') ?? '-')).toEqual(['-', '-', '-']);
+
+        await handles()[2]?.trigger('keydown', { key: 'ArrowUp' });
+        await flushPromises();
+        expect(names()).toEqual(['Alex', 'Bob', 'Cleo']);
+        expect(document.activeElement?.getAttribute('aria-label')).toBe('Move Bob: drag, or press the up and down arrows');
+        // The first row goes no higher, the last no lower.
+        await handles()[0]?.trigger('keydown', { key: 'ArrowUp' });
+        await handles()[2]?.trigger('keydown', { key: 'ArrowDown' });
+        expect(wrapper.emitted('reorder')).toEqual([[0, 2], [2, 1]]);
+        wrapper.unmount();
     });
 });

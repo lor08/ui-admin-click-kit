@@ -28,6 +28,16 @@ const pulseRow = (row: SampleRow): boolean => toggles.pulsing && row.status === 
 const sort = ref<UiTableSort>({ key: 'since', direction: 'desc' });
 const page = ref(3);
 const rows = computed(() => (toggles.empty ? [] : sampleRows));
+// The order the reader sets by hand: the handle drags a row or moves it with the arrows.
+const ordered = ref<SampleRow[]>(sampleRows.slice(0, 4));
+function reorder(from: number, to: number): void {
+    const next = [...ordered.value];
+    const [moved] = next.splice(from, 1);
+    if (moved !== undefined) {
+        next.splice(to, 0, moved);
+        ordered.value = next;
+    }
+}
 </script>
 
 <template>
@@ -46,4 +56,6 @@ const rows = computed(() => (toggles.empty ? [] : sampleRows));
     </UiTable>
     <p class="mt-3 text-xs text-ink-muted">v-model:sort · {{ sort.key }} {{ sort.direction }}</p>
     <UiTable class="mt-2" :columns="columns.slice(0, 3)" :rows="sampleRows.slice(0, 2)" row-key="id" dense :sort="sort" @update:sort="sort = $event" />
+    <p class="mt-3 text-xs text-ink-muted">reorderable · @reorder</p>
+    <UiTable class="mt-2" :columns="columns.slice(0, 2)" :rows="ordered" row-key="id" dense reorderable :row-label="(row) => row.owner" @reorder="reorder" />
 </template>

@@ -340,9 +340,11 @@ export const manifest: KitEntry[] = [
             { name: 'rowTone', type: "(row: T) => 'neutral' | 'brand' | 'success' | 'warning' | 'danger' | 'info' | null", default: 'undefined' },
             { name: 'pulseRow', type: '(row: T) => boolean', default: 'undefined' },
             { name: 'stickyFirst', type: 'boolean', default: 'false' },
+            { name: 'reorderable', type: 'boolean', default: 'false' },
+            { name: 'rowLabel', type: '(row: T) => string', default: 'undefined' },
         ],
         slots: ['cell-<key>', 'header-<key>', 'empty', 'footer'],
-        events: ['update:sort', 'row-click'],
+        events: ['update:sort', 'row-click', 'reorder'],
         snippet: `<UiTable :columns="columns" :rows="props.projects" row-key="id" :empty="t('projects.empty')" clickable @row-click="open">
     <template #cell-status="{ row }"><UiBadge :tone="tones[row.status]" dot>{{ t(\`projects.statuses.\${row.status}\`) }}</UiBadge></template>
     <template #footer><UiPagination v-model:page="page" :last-page="props.last_page" /></template>
