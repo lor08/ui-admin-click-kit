@@ -18,7 +18,7 @@ From git, by tag:
 
 ```json
 "dependencies": {
-    "ui-admin-click-kit": "github:lor08/ui-admin-click-kit#v0.1.0"
+    "ui-admin-click-kit": "github:lor08/ui-admin-click-kit#v0.2.0"
 }
 ```
 
