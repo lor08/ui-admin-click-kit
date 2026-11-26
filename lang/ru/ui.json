@@ -77,6 +77,9 @@
     "timeline": {
         "label": "Шкала времени"
     },
+    "media": {
+        "download": "Скачать :name"
+    },
     "code": {
         "label": "Данные"
     },

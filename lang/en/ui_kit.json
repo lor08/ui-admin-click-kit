@@ -588,6 +588,17 @@
             },
             "events": {}
         },
+        "UiMediaFile": {
+            "purpose": "A file a person sent: a picture shown in the page, a video or a sound played in place, anything else a link to download.",
+            "when": "The attachments of a message (the pictures of an MMS, a file of a ticket) on its card. The host serves the file from its own address; an SVG is downloaded, never shown.",
+            "props": {
+                "src": "The address of the file, one the page's Content-Security-Policy lets it load.",
+                "contentType": "The MIME type of the file as its sender named it: it picks the picture, the player or the link.",
+                "label": "What the file is: the picture's alternative text, the player's name and the words of the download link."
+            },
+            "slots": {},
+            "events": {}
+        },
         "UiTimelineBar": {
             "purpose": "A day on one line: the stretches of a state along a bar, each in its tone with a tooltip.",
             "when": "When a person or a thing was in which state over a span (an agent's day: offline, talking, on a break). How much of each is a UiBarChart or a table; the bar shows when.",
@@ -1647,6 +1658,8 @@
         "swatch_removed": "Removed from the area",
         "tags": "Tags",
         "audio_label": "Recording of the meeting",
+        "media_photo": "Photo 1 of the message",
+        "media_file": "the invoice",
         "audio_played": "Playing.",
         "language": "Language",
         "login_title": "Sign in",

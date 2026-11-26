@@ -66,6 +66,7 @@ export { default as UiLabel } from './UiLabel.vue';
 export { default as UiList } from './UiList.vue';
 export { default as UiListItem } from './UiListItem.vue';
 export { default as UiMap } from './UiMap.vue';
+export { default as UiMediaFile } from './UiMediaFile.vue';
 export { default as UiModal } from './UiModal.vue';
 export { default as UiMultiSelect } from './UiMultiSelect.vue';
 export { default as UiNavItem } from './UiNavItem.vue';

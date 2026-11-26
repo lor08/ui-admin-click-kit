@@ -7,6 +7,7 @@ import UiAvatarDemo from './demos/UiAvatarDemo.vue';
 import UiBadgeDemo from './demos/UiBadgeDemo.vue';
 import UiBarChartDemo from './demos/UiBarChartDemo.vue';
 import UiTimelineBarDemo from './demos/UiTimelineBarDemo.vue';
+import UiMediaFileDemo from './demos/UiMediaFileDemo.vue';
 import UiBreadcrumbsDemo from './demos/UiBreadcrumbsDemo.vue';
 import UiButtonDemo from './demos/UiButtonDemo.vue';
 import UiCardDemo from './demos/UiCardDemo.vue';
@@ -114,6 +115,7 @@ export const demos: Record<string, Component> = {
     UiCopyField: UiCopyFieldDemo,
     UiCodeBlock: UiCodeBlockDemo,
     UiAudioPlayer: UiAudioPlayerDemo,
+    UiMediaFile: UiMediaFileDemo,
     UiAlert: UiAlertDemo,
     UiToaster: UiToasterDemo,
     UiModal: UiModalDemo,

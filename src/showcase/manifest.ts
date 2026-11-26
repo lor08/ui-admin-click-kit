@@ -584,6 +584,18 @@ export const manifest: KitEntry[] = [
         snippet: `<UiAudioPlayer ref="player" :src="recording.url" :label="t('recordings.player')" @play="renew" @error="failed = true" />`,
     },
     {
+        name: 'UiMediaFile',
+        group: 'data',
+        props: [
+            { name: 'src', type: 'string' },
+            { name: 'contentType', type: 'string' },
+            { name: 'label', type: 'string' },
+        ],
+        slots: [],
+        events: [],
+        snippet: `<UiMediaFile v-for="file in sms.media" :key="file.position" :src="file.url" :content-type="file.content_type" :label="t('sms.card.file', { n: file.position + 1 })" />`,
+    },
+    {
         name: 'UiSwatch',
         group: 'data',
         props: [{ name: 'color', type: 'string' }, { name: 'border', type: 'string | null', default: 'null' }, { name: 'size', type: "'sm' | 'md'", default: "'sm'" }],

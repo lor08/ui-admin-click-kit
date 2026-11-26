@@ -84,3 +84,27 @@ export function silentWav(seconds = 1): string {
 
     return URL.createObjectURL(new Blob([bytes], { type: 'audio/wav' }));
 }
+
+/** A small striped BMP picture made in the browser, so the file demo shows a picture without a file or a network request. */
+export function stripedBmp(width = 96, height = 64): string {
+    const row = width * 3;
+    const bytes = new Uint8Array(54 + row * height);
+    const view = new DataView(bytes.buffer);
+    view.setUint16(0, 0x4d42, true);
+    view.setUint32(2, bytes.length, true);
+    view.setUint32(10, 54, true);
+    view.setUint32(14, 40, true);
+    view.setInt32(18, width, true);
+    view.setInt32(22, height, true);
+    view.setUint16(26, 1, true);
+    view.setUint16(28, 24, true);
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+            const at = 54 + y * row + x * 3;
+            const stripe = Math.floor(x / 16) % 2 === 0;
+            bytes.set(stripe ? [235, 99, 37] : [250, 240, 230], at);
+        }
+    }
+
+    return URL.createObjectURL(new Blob([bytes], { type: 'image/bmp' }));
+}
