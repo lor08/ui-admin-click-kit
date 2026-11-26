@@ -1,6 +1,6 @@
 {
     "name": "ui-admin-click-kit",
-    "version": "0.5.0",
+    "version": "0.6.0",
     "description": "Vue 3 admin UI kit: Tailwind 4 components shipped as source, with a showcase catalogue.",
     "type": "module",
     "sideEffects": [
