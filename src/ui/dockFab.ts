@@ -19,6 +19,8 @@ export type FabAnchor = FabEdgeAnchor | FabHeaderAnchor;
 
 export type FabPoint = { x: number; y: number };
 export type FabViewport = { width: number; height: number };
+/** Where the button of an embedded page stands in its host's screen, and whether it is being dragged there. */
+export type FabPlace = FabPoint & { dragging: boolean };
 
 export const HEADER_ANCHOR: FabHeaderAnchor = { kind: 'header' };
 
@@ -58,6 +60,9 @@ export const clampPoint = (point: FabPoint, viewport: FabViewport): FabPoint => 
     x: clamp(point.x, FAB_EDGE_MARGIN, viewport.width - FAB_SIZE - FAB_EDGE_MARGIN),
     y: clamp(point.y, FAB_EDGE_MARGIN, maxOffset(viewport)),
 });
+
+/** The CSS default (right 88, bottom 16) as a point, for a button that has no CSS to stand by: the one in a frame. */
+export const defaultFabPoint = (viewport: FabViewport): FabPoint => clampPoint({ x: viewport.width - FAB_SIZE - 88, y: viewport.height - FAB_SIZE - FAB_EDGE_MARGIN }, viewport);
 
 /** The top left corner of the button for an anchor at an edge, in this viewport. */
 export function anchorToPoint(anchor: FabEdgeAnchor, viewport: FabViewport): FabPoint {

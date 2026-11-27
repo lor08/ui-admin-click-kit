@@ -189,6 +189,20 @@ describe('UiDockDialog', () => {
     });
 });
 
+describe('UiDock inline', () => {
+    it('hands its band to an embedded page instead of publishing it', async () => {
+        const wrapper = mount(UiDock, { props: { inline: true, collapsed: false }, slots: { default: 'bar', fab: '<button data-test="fab">fab</button>' } });
+
+        expect(dockHeight()).toBe('');
+        expect(wrapper.emitted('band')?.[0]).toEqual([44]);
+        await wrapper.setProps({ collapsed: true });
+        await nextTick();
+        expect(wrapper.emitted('band')?.at(-1)).toEqual([0]);
+        expect(dockHeight()).toBe('');
+        expect(wrapper.get('[data-test="fab"]').text()).toBe('fab');
+    });
+});
+
 describe('UiDockFab', () => {
     const fab = (anchor: { kind: 'edge'; edge: 'top' | 'bottom'; offset: number } | null = null) =>
         mount(UiDockFab, { props: { anchor, tone: 'call', dot: 'ok', label: 'Expand', hint: 'Collapsed here' }, slots: { default: '00:42' }, attachTo: document.body });
@@ -229,6 +243,38 @@ describe('UiDockFab', () => {
 
         expect(wrapper.emitted('move')?.[0]).toEqual([{ kind: 'edge', edge: 'top', offset: 100 }]);
         expect(wrapper.emitted('expand')).toBeUndefined();
+        wrapper.unmount();
+    });
+
+    it('in a frame fills it, hands its place in the host screen and drags by the screen coordinates', async () => {
+        const wrapper = mount(UiDockFab, { props: { anchor: null, tone: 'ok', dot: 'ok', label: 'Expand', hint: 'Collapsed here', viewport: { width: 1000, height: 800 } }, attachTo: document.body });
+        const at = (type: string, screenX: number, screenY: number): Event => Object.assign(new MouseEvent(type, { bubbles: true, screenX, screenY, clientX: 10, clientY: 10, button: 0 }), { pointerId: 1, pointerType: 'mouse' });
+
+        expect(wrapper.classes()).toContain('relative');
+        expect(wrapper.classes()).not.toContain('fixed');
+        expect(wrapper.attributes('style')).toBeUndefined();
+        expect(wrapper.find('[data-test="fab-hint"]').exists()).toBe(false);
+        expect(wrapper.emitted('place')?.[0]).toEqual([{ x: 860, y: 732, dragging: false }]);
+
+        wrapper.element.dispatchEvent(at('pointerdown', 500, 500));
+        wrapper.element.dispatchEvent(at('pointermove', 300, 200));
+        await nextTick();
+        expect(wrapper.emitted('place')?.at(-1)).toEqual([{ x: 660, y: 432, dragging: true }]);
+        wrapper.element.dispatchEvent(at('pointerup', 300, 200));
+        await nextTick();
+
+        expect(wrapper.emitted('move')?.[0]).toEqual([{ kind: 'edge', edge: 'bottom', offset: 316 }]);
+        await wrapper.setProps({ anchor: { kind: 'edge', edge: 'bottom', offset: 316 } });
+        expect(wrapper.emitted('place')?.at(-1)).toEqual([{ x: 932, y: 432, dragging: false }]);
+        wrapper.unmount();
+    });
+
+    it('in a frame follows the host screen as it changes size', async () => {
+        const wrapper = mount(UiDockFab, { props: { anchor: { kind: 'edge', edge: 'top', offset: 40 }, tone: 'ok', dot: 'ok', label: 'Expand', viewport: { width: 1000, height: 800 } } });
+
+        expect(wrapper.emitted('place')?.[0]).toEqual([{ x: 932, y: 40, dragging: false }]);
+        await wrapper.setProps({ viewport: { width: 600, height: 300 } });
+        expect(wrapper.emitted('place')?.at(-1)).toEqual([{ x: 532, y: 40, dragging: false }]);
         wrapper.unmount();
     });
 });

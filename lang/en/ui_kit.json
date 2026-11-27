@@ -1157,7 +1157,9 @@
                 "ticker": "A line above the bar: a UiDockTicker.",
                 "fab": "What stands for the bar while it is collapsed: a UiDockFab."
             },
-            "events": {}
+            "events": {
+                "band": "With the height the bar and its ticker take (0 while collapsed), whenever it changes: what an embedded page tells its host to keep free."
+            }
         },
         "UiDockButton": {
             "purpose": "A button of the softphone, Click's `.btn` of the dock.",
@@ -1215,7 +1217,8 @@
                 "tone": "Its colour: in an error, in a call, in the wrap-up; `wait` and `call` breathe.",
                 "dot": "The status point, as on UiDockChip.",
                 "label": "Its name and tooltip.",
-                "hint": "A note beside it, shown while given."
+                "hint": "A note beside it, shown while given.",
+                "viewport": "The screen of the host page when the button is the whole of a frame there: it fills the frame and hands its place instead of standing fixed."
             },
             "slots": {
                 "default": "The timer (UiDockText `fab`) or an icon."
@@ -1223,7 +1226,8 @@
             "events": {
                 "expand": "On a click that was not a drag.",
                 "move": "With the new anchor, after a drag or an arrow key.",
-                "grab": "When a drag starts."
+                "grab": "When a drag starts.",
+                "place": "In a frame: where the frame stands in the host's screen and whether it is being dragged, whenever that changes."
             }
         },
         "UiDockInput": {

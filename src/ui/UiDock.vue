@@ -9,24 +9,30 @@ import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
  * `--voice-dock-height` on the root element (0 while collapsed), which
  * the page reserves (a bar not laid out yet counts its 44), the `ticker`
  * slot above the bar included. `inline` keeps both in the flow of an embedded page,
- * whose frame is as high as its content, and publishes nothing.
+ * whose frame is as high as its content, and publishes nothing: `band`
+ * hands the same height to the page, which tells its host, the page the
+ * frame stands in, what to keep free.
  */
 const props = withDefaults(defineProps<{ inline?: boolean; collapsed?: boolean }>(), { inline: false, collapsed: false });
+
+const emit = defineEmits<{ band: [height: number] }>();
 
 const root = ref<HTMLElement | null>(null);
 let observer: ResizeObserver | null = null;
 
 function publishHeight(): void {
+    const height = props.collapsed ? 0 : root.value?.offsetHeight || 44;
     if (!props.inline) {
-        document.documentElement.style.setProperty('--voice-dock-height', `${props.collapsed ? 0 : (root.value?.offsetHeight || 44)}px`);
+        document.documentElement.style.setProperty('--voice-dock-height', `${height}px`);
     }
+    emit('band', height);
 }
 
 watch(() => props.collapsed, publishHeight, { flush: 'post' });
 
 onMounted(() => {
     publishHeight();
-    if (!props.inline && root.value !== null && typeof ResizeObserver !== 'undefined') {
+    if (root.value !== null && typeof ResizeObserver !== 'undefined') {
         observer = new ResizeObserver(publishHeight);
         observer.observe(root.value);
     }

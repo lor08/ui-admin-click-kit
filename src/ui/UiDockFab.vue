@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { DOCK_DOTS, type DockDot } from './dock';
-import { anchorToPoint, clampPoint, HEADER_FALLBACK, isDragGesture, nudgeFabAnchor, pointToAnchor, type FabAnchor, type FabPoint, type FabViewport } from './dockFab';
-import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
+import { anchorToPoint, clampPoint, defaultFabPoint, HEADER_FALLBACK, isDragGesture, nudgeFabAnchor, pointToAnchor, type FabAnchor, type FabPlace, type FabPoint, type FabViewport } from './dockFab';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
 /**
  * The collapsed softphone, Click's `.voice-dock-fab` (#4555): a round
@@ -11,12 +11,23 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
  * the arrow keys, and snaps to the right edge, anchored to the nearer
  * vertical edge: `move` hands the anchor. The kit's shell has no slot in
  * a header, so a header anchor stands at the top right corner.
+ *
+ * With `viewport` the button is the whole of a frame on another page (an
+ * embedded softphone), whose screen is that viewport: it fills the frame
+ * instead of standing fixed, `place` hands where its frame stands in that
+ * screen (also while it is dragged, so the frame follows the pointer), the
+ * drag counts the pointer's screen coordinates (the frame moves under it),
+ * and the hint is not drawn inside, where the frame would cut it: the host
+ * draws it.
  */
 type FabTone = 'ok' | 'dnd' | 'wait' | 'call' | 'wrap' | 'err' | 'off';
 
-const props = withDefaults(defineProps<{ anchor: FabAnchor | null; tone: FabTone; dot: DockDot; label: string; hint?: string | null }>(), { hint: null });
+const props = withDefaults(defineProps<{ anchor: FabAnchor | null; tone: FabTone; dot: DockDot; label: string; hint?: string | null; viewport?: FabViewport | null }>(), {
+    hint: null,
+    viewport: null,
+});
 
-const emit = defineEmits<{ expand: []; move: [anchor: FabAnchor]; grab: [] }>();
+const emit = defineEmits<{ expand: []; move: [anchor: FabAnchor]; grab: []; place: [place: FabPlace] }>();
 
 interface Drag {
     pointerId: number;
@@ -32,7 +43,9 @@ const readViewport = (): FabViewport => ({
     height: document.documentElement.clientHeight || window.innerHeight,
 });
 
-const viewport = ref<FabViewport>(readViewport());
+const ownViewport = ref<FabViewport>(readViewport());
+const viewport = computed((): FabViewport => props.viewport ?? ownViewport.value);
+const framed = computed((): boolean => props.viewport !== null);
 const dragPoint = ref<FabPoint | null>(null);
 let drag: Drag | null = null;
 // The click comes after pointerup and must not expand the bar after a drag; after a touch it never comes.
@@ -44,21 +57,23 @@ const point = computed((): FabPoint | null => {
     }
     const anchor = props.anchor;
     if (anchor === null) {
-        return null;
+        // In a frame there is no CSS to stand by: the default corner is a point too.
+        return framed.value ? defaultFabPoint(viewport.value) : null;
     }
 
     return anchorToPoint(anchor.kind === 'header' ? HEADER_FALLBACK : anchor, viewport.value);
 });
 
-const position = computed(() => (point.value === null ? undefined : { left: `${point.value.x}px`, top: `${point.value.y}px`, right: 'auto', bottom: 'auto' }));
+const position = computed(() => (point.value === null || framed.value ? undefined : { left: `${point.value.x}px`, top: `${point.value.y}px`, right: 'auto', bottom: 'auto' }));
 
 const backgrounds: Partial<Record<FabTone, string>> = { err: 'bg-dock-fab-err', call: 'bg-dock-fab-call', wrap: 'bg-dock-fab-wrap' };
 const shadows: Partial<Record<FabTone, string>> = { ok: 'shadow-[0_4px_16px_rgb(52_211_153/0.35)]', dnd: 'shadow-[0_4px_16px_rgb(251_191_36/0.35)]' };
 
 const classes = computed(() => [
-    'fixed z-[9000] flex h-[52px] w-[52px] items-center justify-center rounded-full border-0 p-0 text-[22px] text-dock-ink touch-none select-none',
+    framed.value ? 'relative' : 'fixed z-[9000]',
+    'flex h-[52px] w-[52px] items-center justify-center rounded-full border-0 p-0 text-[22px] text-dock-ink touch-none select-none',
     'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dock-active',
-    point.value === null ? 'right-[88px] bottom-4' : '',
+    point.value === null && !framed.value ? 'right-[88px] bottom-4' : '',
     backgrounds[props.tone] ?? 'bg-dock',
     dragPoint.value === null
         ? `cursor-grab transition-[left,top,transform,box-shadow] duration-[280ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${shadows[props.tone] ?? 'shadow-[0_4px_16px_rgb(15_23_42/0.35)]'}`
@@ -66,6 +81,9 @@ const classes = computed(() => [
     props.tone === 'wait' || props.tone === 'call' ? 'animate-dock-pulse' : '',
     props.tone === 'off' ? 'opacity-85' : '',
 ]);
+
+/** In a frame that moves under the pointer only the screen's coordinates stay still. */
+const pointerAt = (event: PointerEvent): FabPoint => (framed.value ? { x: event.screenX, y: event.screenY } : { x: event.clientX, y: event.clientY });
 
 function onPointerDown(event: PointerEvent): void {
     if (event.pointerType === 'mouse' && event.button !== 0) {
@@ -77,7 +95,9 @@ function onPointerDown(event: PointerEvent): void {
         return;
     }
     const rect = target.getBoundingClientRect();
-    drag = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, baseX: rect.left, baseY: rect.top, moving: false };
+    const base = framed.value && point.value !== null ? point.value : { x: rect.left, y: rect.top };
+    const start = pointerAt(event);
+    drag = { pointerId: event.pointerId, startX: start.x, startY: start.y, baseX: base.x, baseY: base.y, moving: false };
     try {
         target.setPointerCapture(event.pointerId);
     } catch {
@@ -89,8 +109,9 @@ function onPointerMove(event: PointerEvent): void {
     if (drag === null || event.pointerId !== drag.pointerId) {
         return;
     }
-    const dx = event.clientX - drag.startX;
-    const dy = event.clientY - drag.startY;
+    const at = pointerAt(event);
+    const dx = at.x - drag.startX;
+    const dy = at.y - drag.startY;
     if (!drag.moving) {
         if (!isDragGesture(dx, dy)) {
             return;
@@ -167,14 +188,24 @@ function onKeydown(event: KeyboardEvent): void {
     }
     const rect = target.getBoundingClientRect();
     // From the CSS default the anchor is where the button stands now.
-    const current = props.anchor ?? pointToAnchor({ x: rect.left, y: rect.top }, viewport.value);
+    const current = props.anchor ?? pointToAnchor(point.value ?? { x: rect.left, y: rect.top }, viewport.value);
     emit('move', nudgeFabAnchor(current, key, viewport.value, false));
     void nextTick(() => target.focus({ preventScroll: true }));
 }
 
 const onResize = (): void => {
-    viewport.value = readViewport();
+    ownViewport.value = readViewport();
 };
+
+watch(
+    [point, dragPoint, framed],
+    () => {
+        if (framed.value && point.value !== null) {
+            emit('place', { x: point.value.x, y: point.value.y, dragging: dragPoint.value !== null });
+        }
+    },
+    { immediate: true },
+);
 
 onMounted(() => {
     window.addEventListener('resize', onResize);
@@ -205,7 +236,7 @@ onBeforeUnmount(() => {
         <slot />
         <span class="absolute top-1 right-1 h-[10px] w-[10px] rounded-full border-2 border-dock" :class="DOCK_DOTS[props.dot]" aria-hidden="true" />
         <span
-            v-if="props.hint"
+            v-if="props.hint && !framed"
             class="pointer-events-none absolute top-1/2 right-[calc(100%+10px)] -translate-y-1/2 rounded-[6px] bg-dock-hint px-2.5 py-1.5 text-xs leading-[1.2] whitespace-nowrap text-dock-ink shadow-[0_4px_14px_rgb(15_23_42/0.3)]"
             aria-hidden="true"
             data-test="fab-hint"

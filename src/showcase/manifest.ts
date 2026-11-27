@@ -965,7 +965,7 @@ toast.push({ tone: 'info', title: t('imports.started'), timeout: 0 });`,
         group: 'softphone',
         props: [{ name: 'inline', type: 'boolean', default: 'false' }, { name: 'collapsed', type: 'boolean', default: 'false' }],
         slots: ['default', 'panel', 'ticker', 'fab'],
-        events: [],
+        events: ['band'],
         snippet: `<UiAppShell :brand="t('app.name')">
     …
     <template #dock>
@@ -1036,9 +1036,10 @@ toast.push({ tone: 'info', title: t('imports.started'), timeout: 0 });`,
             { name: 'dot', type: 'DockDot' },
             { name: 'label', type: 'string' },
             { name: 'hint', type: 'string | null', default: 'null' },
+            { name: 'viewport', type: 'FabViewport | null', default: 'null' },
         ],
         slots: ['default'],
-        events: ['expand', 'move', 'grab'],
+        events: ['expand', 'move', 'grab', 'place'],
         snippet: `<UiDockFab :anchor="anchor" tone="call" dot="ok" :label="t('softphone.expand')" @expand="collapsed = false" @move="(next) => (anchor = next)">
     <UiDockText kind="fab">{{ timer }}</UiDockText>
 </UiDockFab>`,
