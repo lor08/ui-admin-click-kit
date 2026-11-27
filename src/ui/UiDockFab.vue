@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { DOCK_DOTS, type DockDot } from './dock';
-import { anchorToPoint, clampPoint, defaultFabPoint, HEADER_FALLBACK, isDragGesture, nudgeFabAnchor, pointToAnchor, type FabAnchor, type FabPlace, type FabPoint, type FabViewport } from './dockFab';
+import { anchorToPoint, clampPoint, defaultFabPoint, fabOnLeft, HEADER_FALLBACK, isDragGesture, isFabArrow, nudgeFabAnchor, pointToAnchor, type FabAnchor, type FabPlace, type FabPoint, type FabViewport } from './dockFab';
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
 /**
  * The collapsed softphone, Click's `.voice-dock-fab` (#4555): a round
- * button 52 pixels wide at the right edge, its content the call's timer or
- * an icon, the status point at its corner. A click expands the bar; it
- * moves by the pointer (5 pixels make a drag, Escape puts it back) and by
- * the arrow keys, and snaps to the right edge, anchored to the nearer
- * vertical edge: `move` hands the anchor. The kit's shell has no slot in
- * a header, so a header anchor stands at the top right corner.
+ * button 52 pixels wide, its content the call's timer or an icon, the
+ * status point at its corner. A click expands the bar; it moves by the
+ * pointer (5 pixels make a drag, Escape puts it back) and by the arrow
+ * keys to any place on the screen and stays where it was dropped (D-U1),
+ * anchored to the nearer corner and kept inside the screen when the window
+ * changes size: `move` hands the anchor. The hint stands on the side of
+ * the button that faces the middle of the screen. The kit's shell has no
+ * slot in a header, so a header anchor stands at the top right corner.
  *
  * With `viewport` the button is the whole of a frame on another page (an
  * embedded softphone), whose screen is that viewport: it fills the frame
@@ -63,6 +65,8 @@ const point = computed((): FabPoint | null => {
 
     return anchorToPoint(anchor.kind === 'header' ? HEADER_FALLBACK : anchor, viewport.value);
 });
+
+const hintOnRight = computed((): boolean => point.value !== null && fabOnLeft(point.value, viewport.value));
 
 const position = computed(() => (point.value === null || framed.value ? undefined : { left: `${point.value.x}px`, top: `${point.value.y}px`, right: 'auto', bottom: 'auto' }));
 
@@ -178,7 +182,7 @@ function onClick(): void {
 
 function onKeydown(event: KeyboardEvent): void {
     const { key } = event;
-    if ((key !== 'ArrowUp' && key !== 'ArrowDown') || drag !== null) {
+    if (!isFabArrow(key) || drag !== null) {
         return;
     }
     event.preventDefault();
@@ -237,7 +241,8 @@ onBeforeUnmount(() => {
         <span class="absolute top-1 right-1 h-[10px] w-[10px] rounded-full border-2 border-dock" :class="DOCK_DOTS[props.dot]" aria-hidden="true" />
         <span
             v-if="props.hint && !framed"
-            class="pointer-events-none absolute top-1/2 right-[calc(100%+10px)] -translate-y-1/2 rounded-[6px] bg-dock-hint px-2.5 py-1.5 text-xs leading-[1.2] whitespace-nowrap text-dock-ink shadow-[0_4px_14px_rgb(15_23_42/0.3)]"
+            class="pointer-events-none absolute top-1/2 -translate-y-1/2 rounded-[6px] bg-dock-hint px-2.5 py-1.5 text-xs leading-[1.2] whitespace-nowrap text-dock-ink shadow-[0_4px_14px_rgb(15_23_42/0.3)]"
+            :class="hintOnRight ? 'left-[calc(100%+10px)]' : 'right-[calc(100%+10px)]'"
             aria-hidden="true"
             data-test="fab-hint"
             >{{ props.hint }}</span

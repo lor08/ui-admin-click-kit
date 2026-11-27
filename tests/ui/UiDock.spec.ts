@@ -16,6 +16,7 @@ import UiDockSelect from '../../src/ui/UiDockSelect.vue';
 import UiDockStatus from '../../src/ui/UiDockStatus.vue';
 import UiDockTabs from '../../src/ui/UiDockTabs.vue';
 import UiDockTicker from '../../src/ui/UiDockTicker.vue';
+import type { FabEdgeAnchor } from '../../src/ui/dockFab';
 
 const dockHeight = (): string => document.documentElement.style.getPropertyValue('--voice-dock-height');
 
@@ -204,31 +205,37 @@ describe('UiDock inline', () => {
 });
 
 describe('UiDockFab', () => {
-    const fab = (anchor: { kind: 'edge'; edge: 'top' | 'bottom'; offset: number } | null = null) =>
+    const fab = (anchor: FabEdgeAnchor | null = null) =>
         mount(UiDockFab, { props: { anchor, tone: 'call', dot: 'ok', label: 'Expand', hint: 'Collapsed here' }, slots: { default: '00:42' }, attachTo: document.body });
 
-    it('expands on a click, stands at its anchor and shows its hint', async () => {
-        const wrapper = fab({ kind: 'edge', edge: 'top', offset: 40 });
+    it('expands on a click, stands at its anchor and shows its hint towards the middle of the screen', async () => {
+        const wrapper = fab({ kind: 'edge', edge: 'top', offset: 40, side: 'right', inset: 16 });
 
         expect(wrapper.attributes('aria-label')).toBe('Expand');
-        expect(wrapper.attributes('style')).toContain('top: 40px');
+        expect(wrapper.attributes('style')).toBe('left: 956px; top: 40px; right: auto; bottom: auto;');
         expect(wrapper.classes()).toContain('animate-dock-pulse');
         expect(wrapper.get('[data-test="fab-hint"]').text()).toBe('Collapsed here');
+        expect(wrapper.get('[data-test="fab-hint"]').classes()).toContain('right-[calc(100%+10px)]');
+        await wrapper.setProps({ anchor: { kind: 'edge', edge: 'top', offset: 40, side: 'left', inset: 120 } });
+        expect(wrapper.attributes('style')).toBe('left: 120px; top: 40px; right: auto; bottom: auto;');
+        expect(wrapper.get('[data-test="fab-hint"]').classes()).toContain('left-[calc(100%+10px)]');
+        expect(wrapper.get('[data-test="fab-hint"]').classes()).not.toContain('right-[calc(100%+10px)]');
         await wrapper.trigger('click');
         expect(wrapper.emitted('expand')).toHaveLength(1);
         wrapper.unmount();
     });
 
     it('moves by the arrow keys without expanding', async () => {
-        const wrapper = fab({ kind: 'edge', edge: 'top', offset: 100 });
+        const wrapper = fab({ kind: 'edge', edge: 'top', offset: 100, side: 'right', inset: 16 });
 
         await wrapper.trigger('keydown', { key: 'ArrowUp' });
-        expect(wrapper.emitted('move')?.[0]).toEqual([{ kind: 'edge', edge: 'top', offset: 90 }]);
+        await wrapper.trigger('keydown', { key: 'ArrowLeft' });
+        expect(wrapper.emitted('move')).toEqual([[{ kind: 'edge', edge: 'top', offset: 90, side: 'right', inset: 16 }], [{ kind: 'edge', edge: 'top', offset: 100, side: 'right', inset: 26 }]]);
         expect(wrapper.emitted('expand')).toBeUndefined();
         wrapper.unmount();
     });
 
-    it('drags after five pixels, drops at the nearer edge and swallows the click that follows', async () => {
+    it('drags after five pixels, stays where it was dropped and swallows the click that follows', async () => {
         const wrapper = fab();
         const at = (type: string, clientX: number, clientY: number): Event => Object.assign(new MouseEvent(type, { bubbles: true, clientX, clientY, button: 0 }), { pointerId: 1, pointerType: 'mouse' });
 
@@ -241,7 +248,7 @@ describe('UiDockFab', () => {
         wrapper.element.dispatchEvent(at('pointerup', 100, 100));
         await wrapper.trigger('click');
 
-        expect(wrapper.emitted('move')?.[0]).toEqual([{ kind: 'edge', edge: 'top', offset: 100 }]);
+        expect(wrapper.emitted('move')?.[0]).toEqual([{ kind: 'edge', edge: 'top', offset: 100, side: 'left', inset: 100 }]);
         expect(wrapper.emitted('expand')).toBeUndefined();
         wrapper.unmount();
     });
@@ -263,18 +270,20 @@ describe('UiDockFab', () => {
         wrapper.element.dispatchEvent(at('pointerup', 300, 200));
         await nextTick();
 
-        expect(wrapper.emitted('move')?.[0]).toEqual([{ kind: 'edge', edge: 'bottom', offset: 316 }]);
-        await wrapper.setProps({ anchor: { kind: 'edge', edge: 'bottom', offset: 316 } });
-        expect(wrapper.emitted('place')?.at(-1)).toEqual([{ x: 932, y: 432, dragging: false }]);
+        expect(wrapper.emitted('move')?.[0]).toEqual([{ kind: 'edge', edge: 'bottom', offset: 316, side: 'right', inset: 288 }]);
+        await wrapper.setProps({ anchor: { kind: 'edge', edge: 'bottom', offset: 316, side: 'right', inset: 288 } });
+        expect(wrapper.emitted('place')?.at(-1)).toEqual([{ x: 660, y: 432, dragging: false }]);
         wrapper.unmount();
     });
 
     it('in a frame follows the host screen as it changes size', async () => {
-        const wrapper = mount(UiDockFab, { props: { anchor: { kind: 'edge', edge: 'top', offset: 40 }, tone: 'ok', dot: 'ok', label: 'Expand', viewport: { width: 1000, height: 800 } } });
+        const wrapper = mount(UiDockFab, { props: { anchor: { kind: 'edge', edge: 'bottom', offset: 40, side: 'left', inset: 300 }, tone: 'ok', dot: 'ok', label: 'Expand', viewport: { width: 1000, height: 800 } } });
 
-        expect(wrapper.emitted('place')?.[0]).toEqual([{ x: 932, y: 40, dragging: false }]);
+        expect(wrapper.emitted('place')?.[0]).toEqual([{ x: 300, y: 708, dragging: false }]);
         await wrapper.setProps({ viewport: { width: 600, height: 300 } });
-        expect(wrapper.emitted('place')?.at(-1)).toEqual([{ x: 532, y: 40, dragging: false }]);
+        expect(wrapper.emitted('place')?.at(-1)).toEqual([{ x: 300, y: 208, dragging: false }]);
+        await wrapper.setProps({ viewport: { width: 200, height: 100 } });
+        expect(wrapper.emitted('place')?.at(-1)).toEqual([{ x: 132, y: 16, dragging: false }]);
         wrapper.unmount();
     });
 });

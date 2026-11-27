@@ -1210,8 +1210,8 @@
             }
         },
         "UiDockFab": {
-            "purpose": "The collapsed softphone, Click's `.voice-dock-fab`: a round button at the right edge with the call's timer or an icon and the status point at its corner.",
-            "when": "In the `fab` slot of UiDock. It moves by the pointer and the arrow keys and snaps to the right edge, anchored to the nearer vertical edge; the host keeps the anchor (`parseFabAnchor`, `serializeFabAnchor`).",
+            "purpose": "The collapsed softphone, Click's `.voice-dock-fab`: a round button with the call's timer or an icon and the status point at its corner.",
+            "when": "In the `fab` slot of UiDock. It moves by the pointer and the arrow keys to any place on the screen and stays where it was dropped, anchored to the nearer corner and kept on the screen when the window changes size; the host keeps the anchor (`parseFabAnchor`, `serializeFabAnchor`).",
             "props": {
                 "anchor": "Where it stands: an edge and the offset from it; null is the default corner.",
                 "tone": "Its colour: in an error, in a call, in the wrap-up; `wait` and `call` breathe.",
